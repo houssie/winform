@@ -1,0 +1,14 @@
+c:\Users\itiel\Documents\progS4\winform\point\obj\Debug\net8.0-windows\point.GeneratedMSBuildEditorConfig.editorconfig
+c:\Users\itiel\Documents\progS4\winform\point\obj\Debug\net8.0-windows\point.AssemblyInfoInputs.cache
+c:\Users\itiel\Documents\progS4\winform\point\obj\Debug\net8.0-windows\point.AssemblyInfo.cs
+c:\Users\itiel\Documents\progS4\winform\point\obj\Debug\net8.0-windows\point.csproj.CoreCompileInputs.cache
+c:\Users\itiel\Documents\progS4\winform\point\bin\Debug\net8.0-windows\point.exe
+c:\Users\itiel\Documents\progS4\winform\point\bin\Debug\net8.0-windows\point.deps.json
+c:\Users\itiel\Documents\progS4\winform\point\bin\Debug\net8.0-windows\point.runtimeconfig.json
+c:\Users\itiel\Documents\progS4\winform\point\bin\Debug\net8.0-windows\point.dll
+c:\Users\itiel\Documents\progS4\winform\point\bin\Debug\net8.0-windows\point.pdb
+c:\Users\itiel\Documents\progS4\winform\point\obj\Debug\net8.0-windows\point.dll
+c:\Users\itiel\Documents\progS4\winform\point\obj\Debug\net8.0-windows\refint\point.dll
+c:\Users\itiel\Documents\progS4\winform\point\obj\Debug\net8.0-windows\point.pdb
+c:\Users\itiel\Documents\progS4\winform\point\obj\Debug\net8.0-windows\point.genruntimeconfig.cache
+c:\Users\itiel\Documents\progS4\winform\point\obj\Debug\net8.0-windows\ref\point.dll
