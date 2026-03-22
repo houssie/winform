@@ -17,7 +17,7 @@ public class Canon
     
     public void Deplacer(int nouvelleLigne, int tailleMax)
     {
-        if (nouvelleLigne >= 0 && nouvelleLigne <= tailleMax)
+        if (nouvelleLigne >= 0 && nouvelleLigne < tailleMax)
             PositionLigne = nouvelleLigne;
     }
 }

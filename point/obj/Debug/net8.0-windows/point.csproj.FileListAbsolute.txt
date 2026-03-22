@@ -12,3 +12,4 @@ c:\Users\itiel\Documents\progS4\winform\point\obj\Debug\net8.0-windows\refint\po
 c:\Users\itiel\Documents\progS4\winform\point\obj\Debug\net8.0-windows\point.pdb
 c:\Users\itiel\Documents\progS4\winform\point\obj\Debug\net8.0-windows\point.genruntimeconfig.cache
 c:\Users\itiel\Documents\progS4\winform\point\obj\Debug\net8.0-windows\ref\point.dll
+C:\Users\itiel\Documents\progS4\winform\point\obj\Debug\net8.0-windows\point.sourcelink.json

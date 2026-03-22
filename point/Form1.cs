@@ -1,8 +1,10 @@
 using System;
 using System.Windows.Forms;
 using System.Drawing;
+using Microsoft.VisualBasic;
 using System.IO;
 using System.Threading.Tasks;
+using System.Text;
 
 namespace point
 {
@@ -18,7 +20,7 @@ public partial class Form1 : Form
     private Button[,] boutonsGrille = null!;
     private Label labelStatus = null!;
     private Label labelScore = null!;
-    private NumericUpDown numericPuissance = null!;
+    private int puissanceCourante = 5;
     // Le sélecteur de canon assigné a été retiré : le canon utilisé est déterminé automatiquement.
     private Button buttonTirer = null!;
     private Button[] boutonsCanonGauche = null!;
@@ -35,6 +37,7 @@ public partial class Form1 : Form
     
     
     private int taillePlateau = 12; 
+    private readonly string debugLogPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "point_debug.log");
     
     // Les contrôles de déplacement manuel via bouton ont été retirés :
     // déplacement se fait via les boutons latéraux ou clics dédiés.
@@ -74,8 +77,8 @@ public partial class Form1 : Form
         this.Size = new Size(900, 800);
         this.StartPosition = FormStartPosition.CenterScreen;
         
-        // Calcul taille case et panels
-        int tailleCase = 600 / (taillePlateau + 1);
+        // Calcul taille case et panels (grille n x n)
+        int tailleCase = 600 / (taillePlateau);
 
         // Panel gauche pour canons (hors plateau)
         Panel panelLeft = new Panel();
@@ -95,12 +98,12 @@ public partial class Form1 : Form
         panelRight.Size = new Size(tailleCase, 600);
         panelRight.BackColor = Color.Transparent;
         
-        // Créer les boutons de la grille
-        boutonsGrille = new Button[taillePlateau + 1, taillePlateau + 1];
-        
-        for (int i = 0; i <= taillePlateau; i++)
+        // Créer les boutons de la grille (indices 0..taillePlateau-1)
+        boutonsGrille = new Button[taillePlateau, taillePlateau];
+
+        for (int i = 0; i < taillePlateau; i++)
         {
-            for (int j = 0; j <= taillePlateau; j++)
+            for (int j = 0; j < taillePlateau; j++)
             {
                 Button btn = new Button();
                 btn.Location = new Point(j * tailleCase, i * tailleCase);
@@ -116,9 +119,9 @@ public partial class Form1 : Form
         }
 
         // Créer boutons pour canons hors plateau
-        boutonsCanonGauche = new Button[taillePlateau + 1];
-        boutonsCanonDroit = new Button[taillePlateau + 1];
-        for (int i = 0; i <= taillePlateau; i++)
+        boutonsCanonGauche = new Button[taillePlateau];
+        boutonsCanonDroit = new Button[taillePlateau];
+        for (int i = 0; i < taillePlateau; i++)
         {
             Button bL = new Button();
             bL.Location = new Point(0, i * tailleCase);
@@ -174,29 +177,7 @@ public partial class Form1 : Form
         
         // Le choix manuel de canon a été supprimé : le canon est déterminé par le joueur actif.
         
-        // Puissance du tir
-        Label labelPuissance = new Label();
-        labelPuissance.Text = "Puissance (1-9):";
-        labelPuissance.Location = new Point(10, 190);
-        labelPuissance.Size = new Size(200, 25);
-        panelInfo.Controls.Add(labelPuissance);
-        
-        numericPuissance = new NumericUpDown();
-        numericPuissance.Location = new Point(10, 215);
-        numericPuissance.Size = new Size(200, 25);
-        numericPuissance.Minimum = 1;
-        numericPuissance.Maximum = 9;
-        numericPuissance.Value = 5;
-        panelInfo.Controls.Add(numericPuissance);
-        
-        // Bouton tirer
-        buttonTirer = new Button();
-        buttonTirer.Text = "TIRER AU CANON";
-        buttonTirer.Location = new Point(10, 250);
-        buttonTirer.Size = new Size(200, 40);
-        buttonTirer.BackColor = Color.Orange;
-        buttonTirer.Click += ButtonTirer_Click;
-        panelInfo.Controls.Add(buttonTirer);
+        // La puissance est maintenue par la variable `puissanceCourante` (raccourcis Ctrl+1..9).
         
         // Ajouter les panels
         this.Controls.Add(panelLeft);
@@ -310,10 +291,18 @@ public partial class Form1 : Form
     
     this.MainMenuStrip = menuStrip;
     this.Controls.Add(menuStrip);
+
+    // Ajouter option pour changer la taille du plateau à la volée
+    ToolStripMenuItem changerTaille = new ToolStripMenuItem("Changer taille...");
+    changerTaille.Click += ChangerTaille_Click;
+    menuFichier.DropDownItems.Add(changerTaille);
     // Permettre au formulaire d'intercepter les touches (raccourcis clavier)
     this.KeyPreview = true;
     this.KeyDown += Form1_KeyDown;
     }
+
+    // --- Fonctions de redimensionnement du plateau (inserées ici pour rester dans la classe)
+    
     
     private void BtnGrille_Click(object? sender, EventArgs e)
     {
@@ -329,7 +318,7 @@ public partial class Form1 : Form
         // Si on est en phase canon (après placement ou choix), on n'autorise pas de nouveau placement
         if (enPhaseCanon)
         {
-            MessageBox.Show("Vous êtes en phase canon : utilisez 'DÉPLACER LE CANON' ou 'TIRER AU CANON', puis appuyez sur 'FINIR LE TOUR' pour passer.", "Phase canon active", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("Vous êtes en phase canon : déplacez le canon (boutons latéraux) ou tirez (CHOISIR: TIRER / Ctrl+1..9). Le tour se terminera automatiquement.", "Phase canon active", MessageBoxButtons.OK, MessageBoxIcon.Information);
             return;
         }
         
@@ -343,6 +332,7 @@ public partial class Form1 : Form
         // Placer un point
         if (plateau.PlacerPoint(pos.X, pos.Y, joueurActuel))
         {
+            Log($"BtnGrille_Click: placement par {joueurActuel?.Nom} en ({pos.X},{pos.Y})");
             // Vérifier les alignements uniquement liés à la case placée
             int pointsGagnes = plateau.MarquerAlignementsDepuis(pos.X, pos.Y, joueurActuel);
             if (pointsGagnes > 0)
@@ -393,43 +383,46 @@ public partial class Form1 : Form
             MessageBox.Show("Vous avez choisi PLACER exclusivement : le tir n'est pas autorisé ce tour.", "Action non autorisée", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             return;
         }
-    int puissance = (int)numericPuissance.Value;
+    int puissance = puissanceCourante;
         // Le canon utilisé est celui du joueur courant : A -> gauche, B -> droite
         CoteCanon cote = (joueurActuel == joueurA) ? CoteCanon.Gauche : CoteCanon.Droit;
 
     int ligneCanon = (cote == CoteCanon.Gauche) ? canonGauche.PositionLigne : canonDroit.PositionLigne;
     int rawCol = plateau.CalculerColonneCible(puissance);
-    int colonneCible = (cote == CoteCanon.Droit) ? (plateau.Taille - rawCol) : rawCol;
+    int colonneCible = (cote == CoteCanon.Droit) ? (plateau.Taille - 1 - rawCol) : rawCol;
+
+    // Prévenir réentrance : mémoriser le tireur et passer immédiatement au joueur suivant
+    Joueur tireur = joueurActuel;
+    Log($"ButtonTirer_Click: début - tireur={tireur?.Nom}, puissance={puissance}");
+    Joueur suivant = (joueurActuel == joueurA) ? joueurB : joueurA;
+    // Marquer qu'un tir a été effectué dans la phase (si on était en phase)
+    tirEffectueDansPhase = true;
+    enPhaseCanon = false;
+    // Bascule du joueur avant l'animation pour éviter double-tir dû à des événements clavier
+    joueurActuel = suivant;
+    MettreAJourAffichage();
 
     // Animation du tir (affiche la cible correcte selon le côté)
     await AnimerTir(ligneCanon, colonneCible, cote);
-    
-        // Effectuer le tir
-        // Marquer qu'un tir a été effectué dans la phase (si on était en phase)
-        tirEffectueDansPhase = true;
-    if (plateau.TirerCanon(ligneCanon, puissance, cote, joueurActuel))
+
+    // Effectuer le tir en utilisant le tireur mémorisé
+    if (plateau.TirerCanon(ligneCanon, puissance, cote, tireur))
     {
+        Log($"ButtonTirer_Click: tir EFFECTIF par {tireur?.Nom} sur ({ligneCanon},{colonneCible})");
         MettreAJourAffichage();
-        // Après un tir, la phase canon (si active) se termine
-        enPhaseCanon = false;
-        // le bouton "Finir le tour" a été retiré.
-
-            joueurActuel = (joueurActuel == joueurA) ? joueurB : joueurA;
-            MettreAJourAffichage();
-
-        // Vérifier si le tir a créé un alignement pour l'adversaire
+        // Vérifier si le tir a créé un alignement pour le joueur courant (déjà basculé)
         VerifierAlignements(joueurActuel);
-        // Démarrer le tour suivant
+        // Démarrer le tour suivant (le joueur a déjà été basculé)
         DemarrerTour();
     }
     else
     {
+        Log($"ButtonTirer_Click: tir SANS EFFET par {tireur?.Nom} sur ({ligneCanon},{colonneCible})");
         MessageBox.Show("Tir sans effet ou position invalide!", "Information", 
             MessageBoxButtons.OK, MessageBoxIcon.Information);
         // Même en cas de tir sans effet, on considère le tir comme consommé et on termine la phase
         enPhaseCanon = false;
         if (buttonFinirTour != null) buttonFinirTour.Enabled = false;
-        joueurActuel = (joueurActuel == joueurA) ? joueurB : joueurA;
         MettreAJourAffichage();
         DemarrerTour();
     }
@@ -437,6 +430,7 @@ public partial class Form1 : Form
 
     private void DemarrerTour()
     {
+        Log($"DemarrerTour: joueurActuel={(joueurActuel==null?"null":joueurActuel.Nom)}");
         // Affiche un message demandant l'action du joueur courant
         MettreAJourAffichage();
 
@@ -463,6 +457,7 @@ public partial class Form1 : Form
 
     private void ButtonChoisirTirer_Click(object? sender, EventArgs e)
     {
+        Log($"ButtonChoisirTirer_Click: joueur={(joueurActuel==null?"null":joueurActuel.Nom)}");
         // Entrer en phase canon et exiger un tir pour finir le tour
         enPhaseCanon = true;
         phaseRequireTir = true;
@@ -480,6 +475,7 @@ public partial class Form1 : Form
 
     private void ButtonChoisirPlacer_Click(object? sender, EventArgs e)
     {
+        Log($"ButtonChoisirPlacer_Click: joueur={(joueurActuel==null?"null":joueurActuel.Nom)}");
         // Permettre placement normalement (pas de tir requis)
         enPhaseCanon = false;
         phaseRequireTir = false;
@@ -516,9 +512,9 @@ public partial class Form1 : Form
     private void MettreAJourAffichage()
     {
         // Mettre à jour les boutons de la grille
-        for (int i = 0; i <= taillePlateau; i++)
+        for (int i = 0; i < taillePlateau; i++)
         {
-            for (int j = 0; j <= taillePlateau; j++)
+            for (int j = 0; j < taillePlateau; j++)
             {
                 var cellule = plateau.Grille[i, j];
                 Button btn = boutonsGrille[i, j];
@@ -560,11 +556,11 @@ public partial class Form1 : Form
         // Dessiner les canons hors plateau sur les panels latéraux
         if (boutonsCanonGauche != null && canonGauche != null)
         {
-            for (int k = 0; k <= taillePlateau; k++)
+            for (int k = 0; k < taillePlateau; k++)
                 boutonsCanonGauche[k].BackColor = Color.Transparent;
 
             int rG = canonGauche.PositionLigne;
-            if (rG >= 0 && rG <= taillePlateau)
+            if (rG >= 0 && rG < taillePlateau)
             {
                 boutonsCanonGauche[rG].BackColor = Color.Orange;
                 boutonsCanonGauche[rG].Text = "A";
@@ -576,11 +572,11 @@ public partial class Form1 : Form
 
         if (boutonsCanonDroit != null && canonDroit != null)
         {
-            for (int k = 0; k <= taillePlateau; k++)
+            for (int k = 0; k < taillePlateau; k++)
                 boutonsCanonDroit[k].BackColor = Color.Transparent;
 
             int rD = canonDroit.PositionLigne;
-            if (rD >= 0 && rD <= taillePlateau)
+            if (rD >= 0 && rD < taillePlateau)
             {
                 boutonsCanonDroit[rD].BackColor = Color.Orange;
                 boutonsCanonDroit[rD].Text = "B";
@@ -610,7 +606,6 @@ public partial class Form1 : Form
 
         // Activer/désactiver les contrôles selon la phase
         if (buttonTirer != null) buttonTirer.Enabled = enPhaseCanon && !choixExclusifPlacer;
-        if (numericPuissance != null) numericPuissance.Enabled = enPhaseCanon && !choixExclusifPlacer;
 
         // Montrer/cacher les boutons CHOISIR selon l'état du tour
         if (!enPhaseCanon)
@@ -680,9 +675,16 @@ public partial class Form1 : Form
 
 private async Task AnimerTir(int ligne, int colonne, CoteCanon cote)
 {
+    // Sécurité : vérifier bornes avant d'accéder au tableau
+    if (ligne < 0 || ligne >= taillePlateau || colonne < 0 || colonne >= taillePlateau)
+    {
+        Log($"AnimerTir: indices hors bornes ({ligne},{colonne}) taille={taillePlateau}");
+        return;
+    }
+
     Button btnCible = boutonsGrille[ligne, colonne];
     Color originalColor = btnCible.BackColor;
-    
+
     // Effet de flash
     btnCible.BackColor = Color.Yellow;
     await Task.Delay(100);
@@ -720,23 +722,21 @@ private async Task AnimerTir(int ligne, int colonne, CoteCanon cote)
 
         if (digit >= 1 && digit <= 9)
         {
-            if (numericPuissance != null)
-            {
-                numericPuissance.Value = digit;
-                if (labelStatus != null && joueurActuel != null)
-                    labelStatus.Text = $"{joueurActuel.Nom} — Puissance réglée à {digit}";
-            }
-            // Si le joueur n'a pas choisi PLACER exclusivement, lancer le tir directement
-            if (!choixExclusifPlacer)
+            puissanceCourante = digit;
+            if (labelStatus != null && joueurActuel != null)
+                labelStatus.Text = $"{joueurActuel.Nom} — Puissance réglée à {digit}";
+
+            // Si le joueur a choisi TIRER (enPhaseCanon) et n'a pas choisi PLACER exclusivement,
+            // lancer le tir directement. Ne pas auto-tirer si on attend encore le choix.
+            if (!choixExclusifPlacer && !attenteChoix && enPhaseCanon)
             {
                 try
                 {
-                    // Appeler l'action de tir (async void handler) pour démarrer le tir
                     ButtonTirer_Click(this, EventArgs.Empty);
                 }
                 catch
                 {
-                    // ignorer les erreurs ici
+                    // ignorer
                 }
             }
 
@@ -765,9 +765,9 @@ private void Sauvegarder_Click(object? sender, EventArgs e)
             writer.WriteLine(current);
             
             // Sauvegarder la grille
-            for (int i = 0; i <= taillePlateau; i++)
+            for (int i = 0; i < taillePlateau; i++)
             {
-                for (int j = 0; j <= taillePlateau; j++)
+                for (int j = 0; j < taillePlateau; j++)
                 {
                     var cellule = plateau.Grille[i, j];
                     if (cellule.EstOccupee())
@@ -842,8 +842,8 @@ private void Charger_Click(object? sender, EventArgs e)
                 plateau = new Plateau(taillePlateau);
 
                 // Ajuster positions des canons si nécessaire
-                if (canonGauche != null) canonGauche.Deplacer(Math.Min(canonGauche.PositionLigne, taillePlateau), taillePlateau);
-                if (canonDroit != null) canonDroit.Deplacer(Math.Min(canonDroit.PositionLigne, taillePlateau), taillePlateau);
+                if (canonGauche != null) canonGauche.Deplacer(Math.Min(canonGauche.PositionLigne, Math.Max(0, taillePlateau - 1)), taillePlateau);
+                if (canonDroit != null) canonDroit.Deplacer(Math.Min(canonDroit.PositionLigne, Math.Max(0, taillePlateau - 1)), taillePlateau);
 
                 // Reconstruire l'interface : supprimer les contrôles actuels et recréer
                 this.Controls.Clear();
@@ -886,8 +886,79 @@ private void Charger_Click(object? sender, EventArgs e)
             MessageBox.Show($"Erreur lors du chargement : {ex.Message}", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
+}
+
+    private void ChangerTaille_Click(object? sender, EventArgs e)
+    {
+        string input = Interaction.InputBox("Nouvelle taille du plateau (entier entre 5 et 30)", "Changer taille", taillePlateau.ToString());
+        if (string.IsNullOrWhiteSpace(input)) return;
+        if (!int.TryParse(input, out int newSize))
+        {
+            MessageBox.Show("Valeur invalide.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+        }
+        if (newSize < 5 || newSize > 30)
+        {
+            MessageBox.Show("Choisissez une taille entre 5 et 30.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            return;
+        }
+
+        ChangerTaillePlateau(newSize);
+    }
+
+    // Change la taille du plateau en préservant les points existants qui rentrent dans la nouvelle grille.
+    private void ChangerTaillePlateau(int newSize)
+    {
+        if (newSize == taillePlateau) return;
+
+        // Construire un nouveau plateau et copier les données existantes
+        Plateau nouveau = new Plateau(newSize);
+        int min = Math.Min(taillePlateau, newSize);
+                for (int i = 0; i < min; i++)
+                {
+                    for (int j = 0; j < min; j++)
+                    {
+                        var ancienne = plateau.Grille[i, j];
+                        if (ancienne.EstOccupee())
+                        {
+                            nouveau.Grille[i, j].Joueur = ancienne.Joueur;
+                            if (ancienne.EstProtege) nouveau.Grille[i, j].Proteger();
+                            nouveau.Grille[i, j].EstTouche = ancienne.EstTouche;
+                        }
+                    }
+                }
+
+        // Remplacer le plateau et mettre à jour la taille
+        plateau = nouveau;
+        taillePlateau = newSize;
+
+        // Ajuster les canons pour rester dans les bornes
+        if (canonGauche != null) canonGauche.Deplacer(Math.Min(canonGauche.PositionLigne, Math.Max(0, taillePlateau - 1)), taillePlateau);
+        if (canonDroit != null) canonDroit.Deplacer(Math.Min(canonDroit.PositionLigne, Math.Max(0, taillePlateau - 1)), taillePlateau);
+
+        // Reconstruire l'interface (recrée boutons et panels)
+        this.Controls.Clear();
+        ConfigurerInterface();
+        MettreAJourAffichage();
+
+        MessageBox.Show($"Taille du plateau changée à {newSize} (points hors bornes perdus).", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+    }
+
+    // Simple logger qui écrit dans un fichier pour reproduire les séquences d'actions
+    private void Log(string line)
+    {
+        try
+        {
+            string text = $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff}] {line}" + Environment.NewLine;
+            File.AppendAllText(debugLogPath, text, Encoding.UTF8);
+        }
+        catch
+        {
+            // ignore logging errors
+        }
+    }
 
 } // class Form1
 
 } // namespace point
-}
+
