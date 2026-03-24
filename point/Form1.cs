@@ -16,6 +16,7 @@ public partial class Form1 : Form
     private Joueur joueurActuel = null!;
     private Canon canonGauche = null!;
     private Canon canonDroit = null!;
+    private GameService gameService = null!;
 
     private Button[,] boutonsGrille = null!;
     private Panel? panelGrille = null;
@@ -52,6 +53,8 @@ public partial class Form1 : Form
     public Form1()
     {
         InitializeComponent();
+        GameService.InitializeDatabase();
+        gameService = new GameService();
         InitialiserJeu();
     }
     
@@ -876,40 +879,20 @@ private async Task AnimerTir(int ligne, int colonne, CoteCanon cote)
 
 private void Sauvegarder_Click(object? sender, EventArgs e)
 {
-    SaveFileDialog saveDialog = new SaveFileDialog();
-    saveDialog.Filter = "Fichiers Point+Canon|*.pcs";
-    saveDialog.Title = "Sauvegarder la partie";
+    string nomPartie = Interaction.InputBox("Nom de la partie :", "Sauvegarder", $"Partie_{DateTime.Now:HHmmss}");
+    if (string.IsNullOrWhiteSpace(nomPartie)) return;
     
-    if (saveDialog.ShowDialog() == DialogResult.OK)
-    {
-        // Sauvegarder l'état du jeu
-        using (StreamWriter writer = new StreamWriter(saveDialog.FileName))
-        {
-            writer.WriteLine(taillePlateau);
-            writer.WriteLine(joueurA!.Score);
-            writer.WriteLine(joueurB!.Score);
-            string current = ReferenceEquals(joueurActuel, joueurA) ? "A" : "B";
-            writer.WriteLine(current);
-            
-            // Sauvegarder la grille
-            for (int i = 0; i < taillePlateau; i++)
-            {
-                for (int j = 0; j < taillePlateau; j++)
-                {
-                    var cellule = plateau.Grille[i, j];
-                    if (cellule.EstOccupee())
-                    {
-                        char joueur = cellule.Joueur == joueurA ? 'A' : 'B';
-                        char protege = cellule.EstProtege ? 'P' : 'N';
-                        writer.WriteLine($"{i},{j},{joueur},{protege}");
-                    }
-                }
-            }
-        }
-        
-        MessageBox.Show("Partie sauvegardée !", "Succès", 
-            MessageBoxButtons.OK, MessageBoxIcon.Information);
-    }
+    gameService.SauvegarderPartie(
+        nomPartie, 
+        ReferenceEquals(joueurActuel, joueurA), 
+        plateau, 
+        canonGauche, 
+        canonDroit, 
+        joueurA.Score, 
+        joueurB.Score, 
+        puissanceCourante,
+        puissanceCourante
+    );
 }
 
 private void Regles_Click(object? sender, EventArgs e)
@@ -943,75 +926,83 @@ private void NouvellePartie_Click(object? sender, EventArgs e)
 
 private void Charger_Click(object? sender, EventArgs e)
 {
-    OpenFileDialog openDialog = new OpenFileDialog();
-    openDialog.Filter = "Fichiers Point+Canon|*.pcs";
-    openDialog.Title = "Charger une partie";
-
-    if (openDialog.ShowDialog() == DialogResult.OK)
+    try
     {
-        try
+        var parties = gameService.ListeParties();
+        if (parties.Count == 0)
         {
-            var lines = File.ReadAllLines(openDialog.FileName);
-
-            if (lines.Length < 4)
-            {
-                MessageBox.Show("Fichier de sauvegarde invalide.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            int savedTaille = int.Parse(lines[0]);
-
-            // Si la taille diffère, on reconstruit automatiquement le plateau et l'interface
-            if (savedTaille != taillePlateau)
-            {
-                taillePlateau = savedTaille;
-                // Recréer le plateau de la bonne taille (les cellules seront remplies ensuite)
-                plateau = new Plateau(taillePlateau);
-
-                // Ajuster positions des canons si nécessaire
-                if (canonGauche != null) canonGauche.Deplacer(Math.Min(canonGauche.PositionLigne, Math.Max(0, taillePlateau - 1)), taillePlateau);
-                if (canonDroit != null) canonDroit.Deplacer(Math.Min(canonDroit.PositionLigne, Math.Max(0, taillePlateau - 1)), taillePlateau);
-
-                // Reconstruire l'interface : supprimer les contrôles actuels et recréer
-                this.Controls.Clear();
-                ConfigurerInterface();
-            }
-
-            // Scores et joueur courant
-            joueurA.Score = int.Parse(lines[1]);
-            joueurB.Score = int.Parse(lines[2]);
-            joueurActuel = lines[3].Trim() == "A" ? joueurA : joueurB;
-
-            // Si plateau non créé (tailles identiques), on le crée maintenant
-            if (plateau == null || plateau.Taille != taillePlateau)
-                plateau = new Plateau(taillePlateau);
-
-            // Appliquer les points sauvegardés
-            for (int k = 4; k < lines.Length; k++)
-            {
-                var parts = lines[k].Split(',');
-                if (parts.Length < 4) continue;
-
-                if (!int.TryParse(parts[0], out int li)) continue;
-                if (!int.TryParse(parts[1], out int co)) continue;
-
-                char joueurChar = parts[2].Length > 0 ? parts[2][0] : '?';
-                char protegeChar = parts[3].Length > 0 ? parts[3][0] : 'N';
-
-                if (!plateau.EstPositionValide(li, co)) continue;
-
-                plateau.Grille[li, co].Joueur = joueurChar == 'A' ? joueurA : joueurB;
-                plateau.Grille[li, co].EstTouche = false;
-                plateau.Grille[li, co].EstProtege = protegeChar == 'P';
-            }
-
-            MettreAJourAffichage();
-            MessageBox.Show("Partie chargée avec succès.", "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("Aucune partie sauvegardée.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            return;
         }
-        catch (Exception ex)
+
+        // Créer un formulaire pour choisir la partie
+        using (var form = new Form())
         {
-            MessageBox.Show($"Erreur lors du chargement : {ex.Message}", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            form.Text = "Charger une partie";
+            form.Size = new Size(400, 300);
+            form.StartPosition = FormStartPosition.CenterParent;
+            form.FormBorderStyle = FormBorderStyle.FixedDialog;
+            form.MaximizeBox = false;
+
+            var listBox = new ListBox();
+            listBox.Dock = DockStyle.Top;
+            listBox.Height = 200;
+            foreach (var p in parties)
+                listBox.Items.Add($"{p.NomPartie} ({p.DateSauvegarde:g})");
+            form.Controls.Add(listBox);
+
+            var btnCharger = new Button { Text = "Charger", Dock = DockStyle.Bottom, Height = 30 };
+            var btnAnnuler = new Button { Text = "Annuler", Dock = DockStyle.Bottom, Height = 30 };
+            form.Controls.Add(btnCharger);
+            form.Controls.Add(btnAnnuler);
+
+            btnCharger.Click += (s, e) =>
+            {
+                if (listBox.SelectedIndex >= 0)
+                {
+                    var gameState = parties[listBox.SelectedIndex];
+                    ChargerEtatPartie(gameState);
+                    form.DialogResult = DialogResult.OK;
+                }
+            };
+
+            btnAnnuler.Click += (s, e) => form.DialogResult = DialogResult.Cancel;
+            form.ShowDialog();
         }
+    }
+    catch (Exception ex)
+    {
+        MessageBox.Show($"Erreur : {ex.Message}", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+    }
+}
+
+private void ChargerEtatPartie(GameState gameState)
+{
+    try
+    {
+        // Créer nouveau plateau
+        plateau = new Plateau(taillePlateau);
+        
+        // Restaurer les scores
+        joueurA.Score = gameState.ScoreRouge;
+        joueurB.Score = gameState.ScoreBleu;
+        
+        // Restaurer positions canons
+        canonGauche.Deplacer(gameState.PositionCanonGauche, taillePlateau);
+        canonDroit.Deplacer(gameState.PositionCanonDroit, taillePlateau);
+        
+        // Restaurer puissances
+        puissanceCourante = gameState.PuissanceCanonGauche;
+        
+        // Restaurer la grille depuis JSON
+        gameService.RestaurerGrille(gameState, plateau);
+        
+        MettreAJourAffichage();
+        MessageBox.Show("Partie chargée avec succès.", "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
+    }
+    catch (Exception ex)
+    {
+        MessageBox.Show($"Erreur restauration : {ex.Message}", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
     }
 }
 
