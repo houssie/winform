@@ -18,6 +18,9 @@ public partial class Form1 : Form
     private Canon canonDroit = null!;
 
     private Button[,] boutonsGrille = null!;
+    private Panel? panelGrille = null;
+    private Panel? panelLeft = null;
+    private Panel? panelRight = null;
     private Label labelStatus = null!;
     private Label labelScore = null!;
     private int puissanceCourante = 5;
@@ -35,6 +38,10 @@ public partial class Form1 : Form
     private Label labelPhase = null!;
     private bool attenteChoix = false; // vrai tant que le joueur n'a pas choisi TIRER ou PLACER
     
+    // Variables pour le drag-and-drop des canons
+    private bool isCanonGaucheDragging = false;
+    private bool isCanonDroitDragging = false;
+    private int draggingStartY = 0;
     
     private int taillePlateau = 12; 
     private readonly string debugLogPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "point_debug.log");
@@ -65,6 +72,9 @@ public partial class Form1 : Form
         // Configurer l'interface
         ConfigurerInterface();
         
+        // Placer les points de démonstration comme sur l'image
+        InitialiserDemonstration();
+        
         // Mettre à jour l'affichage
         MettreAJourAffichage();
         // Démarrer le premier tour
@@ -81,35 +91,50 @@ public partial class Form1 : Form
         int tailleCase = 600 / (taillePlateau);
 
         // Panel gauche pour canons (hors plateau)
-        Panel panelLeft = new Panel();
+        panelLeft = new Panel();
         panelLeft.Location = new Point(20, 20);
         panelLeft.Size = new Size(tailleCase, 600);
         panelLeft.BackColor = Color.Transparent;
+        panelLeft.Paint += PanelCanonGauche_Paint;
+        panelLeft.MouseDown += PanelLeft_MouseDown;
+        panelLeft.MouseMove += PanelLeft_MouseMove;
+        panelLeft.MouseUp += PanelLeft_MouseUp;
 
         // Panel pour la grille (décalé à droite pour laisser la colonne des canons)
-        Panel panelGrille = new Panel();
+        panelGrille = new Panel();
         panelGrille.Location = new Point(20 + tailleCase, 20);
         panelGrille.Size = new Size(600, 600);
-        panelGrille.BackColor = Color.Beige;
+        panelGrille.BackColor = Color.White;
+        
+        // Ajouter un événement Paint pour dessiner la grille et les points
+        panelGrille.Paint += PanelGrille_Paint;
 
         // Panel droit pour canons (hors plateau)
-        Panel panelRight = new Panel();
+        panelRight = new Panel();
         panelRight.Location = new Point(panelGrille.Left + panelGrille.Width, 20);
         panelRight.Size = new Size(tailleCase, 600);
         panelRight.BackColor = Color.Transparent;
+        panelRight.Paint += PanelCanonDroit_Paint;
+        panelRight.MouseDown += PanelRight_MouseDown;
+        panelRight.MouseMove += PanelRight_MouseMove;
+        panelRight.MouseUp += PanelRight_MouseUp;
         
-        // Créer les boutons de la grille (indices 0..taillePlateau-1)
-        boutonsGrille = new Button[taillePlateau, taillePlateau];
+        // Créer les boutons de la grille avec (taillePlateau+1) x (taillePlateau+1) intersections
+        boutonsGrille = new Button[taillePlateau + 1, taillePlateau + 1];
 
-        for (int i = 0; i < taillePlateau; i++)
+        for (int i = 0; i <= taillePlateau; i++)
         {
-            for (int j = 0; j < taillePlateau; j++)
+            for (int j = 0; j <= taillePlateau; j++)
             {
                 Button btn = new Button();
-                btn.Location = new Point(j * tailleCase, i * tailleCase);
-                btn.Size = new Size(tailleCase, tailleCase);
+                // Positions aux intersections (lignes et colonnes)
+                int xPos = (j * 600) / taillePlateau - 5;  // centré sur l'intersection
+                int yPos = (i * 600) / taillePlateau - 5;  // centré sur l'intersection
+                btn.Location = new Point(xPos, yPos);
+                btn.Size = new Size(10, 10);  // Petit bouton juste pour le clic
                 btn.BackColor = Color.White;
                 btn.FlatStyle = FlatStyle.Flat;
+                btn.FlatAppearance.BorderSize = 0;
                 btn.Tag = new Point(i, j);
                 btn.Click += BtnGrille_Click;
                 
@@ -118,24 +143,27 @@ public partial class Form1 : Form
             }
         }
 
-        // Créer boutons pour canons hors plateau
-        boutonsCanonGauche = new Button[taillePlateau];
-        boutonsCanonDroit = new Button[taillePlateau];
-        for (int i = 0; i < taillePlateau; i++)
+        // Créer boutons pour canons hors plateau (taillePlateau+1 lignes)
+        boutonsCanonGauche = new Button[taillePlateau + 1];
+        boutonsCanonDroit = new Button[taillePlateau + 1];
+        for (int i = 0; i <= taillePlateau; i++)
         {
             Button bL = new Button();
-            bL.Location = new Point(0, i * tailleCase);
-            bL.Size = new Size(tailleCase, tailleCase);
+            int yPos = (i * 600) / taillePlateau - 5;
+            bL.Location = new Point(0, yPos);
+            bL.Size = new Size(10, 10);
             bL.FlatStyle = FlatStyle.Flat;
+            bL.FlatAppearance.BorderSize = 0;
             bL.Tag = i; // stocke la ligne
             bL.Click += BoutonCanonGauche_Click;
             panelLeft.Controls.Add(bL);
             boutonsCanonGauche[i] = bL;
 
             Button bR = new Button();
-            bR.Location = new Point(0, i * tailleCase);
-            bR.Size = new Size(tailleCase, tailleCase);
+            bR.Location = new Point(0, yPos);
+            bR.Size = new Size(10, 10);
             bR.FlatStyle = FlatStyle.Flat;
+            bR.FlatAppearance.BorderSize = 0;
             bR.Tag = i; // stocke la ligne
             bR.Click += BoutonCanonDroit_Click;
             panelRight.Controls.Add(bR);
@@ -511,79 +539,12 @@ public partial class Form1 : Form
     
     private void MettreAJourAffichage()
     {
-        // Mettre à jour les boutons de la grille
-        for (int i = 0; i < taillePlateau; i++)
-        {
-            for (int j = 0; j < taillePlateau; j++)
-            {
-                var cellule = plateau.Grille[i, j];
-                Button btn = boutonsGrille[i, j];
-                
-                if (cellule.EstOccupee())
-                {
-                    var joueurCell = cellule.Joueur;
-                    if (joueurCell != null && joueurCell.Couleur == Couleur.Rouge)
-                    {
-                        btn.Text = "●";
-                        btn.ForeColor = Color.Red;
-                        btn.Font = new Font("Arial", 12, FontStyle.Bold);
-                    }
-                    else if (joueurCell != null)
-                    {
-                        btn.Text = "○";
-                        btn.ForeColor = Color.Blue;
-                        btn.Font = new Font("Arial", 12, FontStyle.Bold);
-                    }
-                    
-                    if (cellule.EstProtege)
-                    {
-                        btn.BackColor = Color.LightGreen;
-                    }
-                    else
-                    {
-                        btn.BackColor = Color.White;
-                    }
-                }
-                else
-                {
-                    btn.Text = "";
-                    btn.BackColor = cellule.EstTouche ? Color.LightGray : Color.White;
-                }
-            }
+        // Rafraîchir le panel pour redessiner la grille et les points
+        if (panelGrille != null) panelGrille.Invalidate();
 
-        }
-
-        // Dessiner les canons hors plateau sur les panels latéraux
-        if (boutonsCanonGauche != null && canonGauche != null)
-        {
-            for (int k = 0; k < taillePlateau; k++)
-                boutonsCanonGauche[k].BackColor = Color.Transparent;
-
-            int rG = canonGauche.PositionLigne;
-            if (rG >= 0 && rG < taillePlateau)
-            {
-                boutonsCanonGauche[rG].BackColor = Color.Orange;
-                boutonsCanonGauche[rG].Text = "A";
-                boutonsCanonGauche[rG].ForeColor = Color.Red;
-                // s'assurer que les boutons latéraux sont cliquables pour déplacer le canon
-                boutonsCanonGauche[rG].Enabled = true;
-            }
-        }
-
-        if (boutonsCanonDroit != null && canonDroit != null)
-        {
-            for (int k = 0; k < taillePlateau; k++)
-                boutonsCanonDroit[k].BackColor = Color.Transparent;
-
-            int rD = canonDroit.PositionLigne;
-            if (rD >= 0 && rD < taillePlateau)
-            {
-                boutonsCanonDroit[rD].BackColor = Color.Orange;
-                boutonsCanonDroit[rD].Text = "B";
-                boutonsCanonDroit[rD].ForeColor = Color.Blue;
-                boutonsCanonDroit[rD].Enabled = true;
-            }
-        }
+        // Rafraîchir les panels des canons
+        if (panelLeft != null) panelLeft.Invalidate();
+        if (panelRight != null) panelRight.Invalidate();
 
         // Mettre à jour les labels
         labelStatus.Text = $"Au tour de: {joueurActuel!.Nom} ({joueurActuel!.Couleur})";
@@ -623,6 +584,70 @@ public partial class Form1 : Form
         AnimerIndicateurTour();
     }
 
+    private void PanelGrille_Paint(object? sender, PaintEventArgs e)
+    {
+        // Dessiner la grille
+        using (Pen gridPen = new Pen(Color.Black, 1))
+        {
+            for (int k = 0; k <= taillePlateau; k++)
+            {
+                int pos = (k * 600) / taillePlateau;
+                // Lignes verticales
+                e.Graphics.DrawLine(gridPen, pos, 0, pos, 600);
+                // Lignes horizontales
+                e.Graphics.DrawLine(gridPen, 0, pos, 600, pos);
+            }
+        }
+
+        // Dessiner les points aux intersections
+        if (plateau == null) return;
+        
+        for (int i = 0; i <= taillePlateau; i++)
+        {
+            for (int j = 0; j <= taillePlateau; j++)
+            {
+                var cellule = plateau.Grille[i, j];
+                if (!cellule.EstOccupee()) continue;
+
+                // Position de l'intersection
+                int xCenter = (j * 600) / taillePlateau;
+                int yCenter = (i * 600) / taillePlateau;
+                int rayon = 8;
+
+                // Dessiner le point
+                if (cellule.Joueur != null)
+                {
+                    if (cellule.Joueur.Couleur == Couleur.Rouge)
+                    {
+                        // Point plein rouge
+                        using (Brush brush = new SolidBrush(Color.Red))
+                        {
+                            e.Graphics.FillEllipse(brush, xCenter - rayon, yCenter - rayon, rayon * 2, rayon * 2);
+                        }
+                    }
+                    else
+                    {
+                        // Point creux bleu
+                        using (Pen pen = new Pen(Color.Blue, 2))
+                        {
+                            e.Graphics.DrawEllipse(pen, xCenter - rayon, yCenter - rayon, rayon * 2, rayon * 2);
+                        }
+                    }
+
+                    // Fond vert si protection
+                    if (cellule.EstProtege)
+                    {
+                        int rectSize = 20;
+                        using (Brush brush = new SolidBrush(Color.FromArgb(100, 144, 238, 144)))
+                        {
+                            e.Graphics.FillRectangle(brush, xCenter - rectSize, yCenter - rectSize, rectSize * 2, rectSize * 2);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     private async void AnimerIndicateurTour()
     {
         if (labelStatus == null || joueurActuel == null) return;
@@ -644,6 +669,108 @@ public partial class Form1 : Form
         {
             // ignore si la fenêtre est en train de se fermer
         }
+    }
+
+    private void PanelCanonGauche_Paint(object? sender, PaintEventArgs e)
+    {
+        if (canonGauche == null) return;
+
+        int yCenter = (canonGauche.PositionLigne * 600) / taillePlateau;
+        int rayon = 8;
+        
+        // Dessiner le canon gauche en rouge
+        using (Brush brush = new SolidBrush(Color.Red))
+        {
+            e.Graphics.FillEllipse(brush, 20 - rayon, yCenter - rayon, rayon * 2, rayon * 2);
+        }
+        
+        // Dessiner "A" 
+        using (Font font = new Font("Arial", 8, FontStyle.Bold))
+        using (Brush textBrush = new SolidBrush(Color.White))
+        {
+            e.Graphics.DrawString("A", font, textBrush, 15, yCenter - 6);
+        }
+    }
+
+    private void PanelCanonDroit_Paint(object? sender, PaintEventArgs e)
+    {
+        if (canonDroit == null) return;
+
+        int yCenter = (canonDroit.PositionLigne * 600) / taillePlateau;
+        int rayon = 8;
+        
+        // Dessiner le canon droit en bleu (cercle creux)
+        using (Pen pen = new Pen(Color.Blue, 2))
+        {
+            e.Graphics.DrawEllipse(pen, 20 - rayon, yCenter - rayon, rayon * 2, rayon * 2);
+        }
+        
+        // Dessiner "B"
+        using (Font font = new Font("Arial", 8, FontStyle.Bold))
+        using (Brush textBrush = new SolidBrush(Color.Blue))
+        {
+            e.Graphics.DrawString("B", font, textBrush, 15, yCenter - 6);
+        }
+    }
+
+    // Gestion du drag-and-drop pour le canon gauche
+    private void PanelLeft_MouseDown(object? sender, MouseEventArgs e)
+    {
+        isCanonGaucheDragging = true;
+        draggingStartY = e.Y;
+    }
+
+    private void PanelLeft_MouseMove(object? sender, MouseEventArgs e)
+    {
+        if (!isCanonGaucheDragging) return;
+
+        // Convertir position Y en ligne (0 à taillePlateau)
+        int newLigne = (e.Y * taillePlateau) / 600;
+        if (newLigne < 0) newLigne = 0;
+        if (newLigne > taillePlateau) newLigne = taillePlateau;
+
+        canonGauche.PositionLigne = newLigne;
+        if (panelLeft != null) panelLeft.Invalidate();
+    }
+
+    private void PanelLeft_MouseUp(object? sender, MouseEventArgs e)
+    {
+        isCanonGaucheDragging = false;
+        MettreAJourAffichage();
+    }
+
+    // Gestion du drag-and-drop pour le canon droit
+    private void PanelRight_MouseDown(object? sender, MouseEventArgs e)
+    {
+        isCanonDroitDragging = true;
+        draggingStartY = e.Y;
+    }
+
+    private void PanelRight_MouseMove(object? sender, MouseEventArgs e)
+    {
+        if (!isCanonDroitDragging) return;
+
+        // Convertir position Y en ligne (0 à taillePlateau)
+        int newLigne = (e.Y * taillePlateau) / 600;
+        if (newLigne < 0) newLigne = 0;
+        if (newLigne > taillePlateau) newLigne = taillePlateau;
+
+        canonDroit.PositionLigne = newLigne;
+        if (panelRight != null) panelRight.Invalidate();
+    }
+
+    private void PanelRight_MouseUp(object? sender, MouseEventArgs e)
+    {
+        isCanonDroitDragging = false;
+        MettreAJourAffichage();
+    }
+
+
+    // Initialiser une démonstration avec des points placés en diagonale
+    private void InitialiserDemonstration()
+    {
+        // Pas de points placés par défaut au démarrage
+        // Les joueurs placent leurs propres points
     }
 
     private async void AnimerBoutonsChoix()
@@ -676,7 +803,7 @@ public partial class Form1 : Form
 private async Task AnimerTir(int ligne, int colonne, CoteCanon cote)
 {
     // Sécurité : vérifier bornes avant d'accéder au tableau
-    if (ligne < 0 || ligne >= taillePlateau || colonne < 0 || colonne >= taillePlateau)
+    if (ligne < 0 || ligne > taillePlateau || colonne < 0 || colonne > taillePlateau)
     {
         Log($"AnimerTir: indices hors bornes ({ligne},{colonne}) taille={taillePlateau}");
         return;

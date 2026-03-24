@@ -12,15 +12,16 @@ public class Plateau
     public Plateau(int taille)
     {
         Taille = taille;
-        Grille = new Cellule[taille, taille];
-        for (int i = 0; i < taille; i++)
-            for (int j = 0; j < taille; j++)
+        // Grille pour intersections: (taille+1) x (taille+1)
+        Grille = new Cellule[taille + 1, taille + 1];
+        for (int i = 0; i <= taille; i++)
+            for (int j = 0; j <= taille; j++)
                 Grille[i, j] = new Cellule();
     }
 
     public bool EstPositionValide(int ligne, int colonne)
     {
-        return ligne >= 0 && ligne < Taille && colonne >= 0 && colonne < Taille;
+        return ligne >= 0 && ligne <= Taille && colonne >= 0 && colonne <= Taille;
     }
 
     public bool PlacerPoint(int ligne, int colonne, Joueur joueur)
@@ -37,7 +38,7 @@ public class Plateau
     public bool TirerCanon(int ligne, int puissance, CoteCanon cote, Joueur tireur)
     {
         int rawCol = CalculerColonneCible(puissance);
-        int colonneCible = (cote == CoteCanon.Droit) ? (Taille - 1 - rawCol) : rawCol;
+        int colonneCible = (cote == CoteCanon.Droit) ? (Taille - rawCol) : rawCol;
 
         if (!EstPositionValide(ligne, colonneCible)) return false;
 
@@ -54,11 +55,12 @@ public class Plateau
 
     public int CalculerColonneCible(int puissance)
     {
-        // Map puissance 0..9 to column 0..Taille-1
-        double resultat = (puissance * (Taille - 1)) / 9.0;
-        int col = (int)Math.Round(resultat);
+        // Map puissance 0..9 to column 0..Taille (Taille+1 colonnes)
+        // Prendre juste la partie entière sans arrondir
+        double resultat = (puissance * Taille) / 9.0;
+        int col = (int)resultat;  // Troncature: partie entière uniquement
         if (col < 0) col = 0;
-        if (col >= Taille) col = Taille - 1;
+        if (col > Taille) col = Taille;
         return col;
     }
 
@@ -75,9 +77,9 @@ public class Plateau
             new int[] { 1, -1 }
         };
 
-        for (int i = 0; i < Taille; i++)
+        for (int i = 0; i <= Taille; i++)
         {
-            for (int j = 0; j < Taille; j++)
+            for (int j = 0; j <= Taille; j++)
             {
                 if (Grille[i, j].Joueur != joueur || Grille[i, j].EstProtege) continue;
 
@@ -85,7 +87,7 @@ public class Plateau
                 {
                     int prevX = i - dir[0];
                     int prevY = j - dir[1];
-                    if (prevX >= 0 && prevX < Taille && prevY >= 0 && prevY < Taille)
+                    if (prevX >= 0 && prevX <= Taille && prevY >= 0 && prevY <= Taille)
                     {
                         if (Grille[prevX, prevY].Joueur == joueur) continue; // déjà traité
                     }
@@ -115,7 +117,7 @@ public class Plateau
         {
             int nx = x - k * dx;
             int ny = y - k * dy;
-            if (nx < 0 || nx >= Taille || ny < 0 || ny >= Taille) break;
+            if (nx < 0 || nx > Taille || ny < 0 || ny > Taille) break;
             if (Grille[nx, ny].Joueur == joueur && !Grille[nx, ny].EstProtege) pts.Insert(0, new Point(nx, ny)); else break;
             k++;
         }
@@ -129,7 +131,7 @@ public class Plateau
         {
             int nx = x + k * dx;
             int ny = y + k * dy;
-            if (nx < 0 || nx >= Taille || ny < 0 || ny >= Taille) break;
+            if (nx < 0 || nx > Taille || ny < 0 || ny > Taille) break;
             if (Grille[nx, ny].Joueur == joueur && !Grille[nx, ny].EstProtege) pts.Add(new Point(nx, ny)); else break;
             k++;
         }
@@ -140,8 +142,29 @@ public class Plateau
     public int MarquerAlignements(Joueur joueur)
     {
         var aligns = VerifierAlignements(joueur);
+        
+        // Filtrer pour éviter les alignements qui se chevauchent - garder seulement le premier de chaque groupe
+        var alignementsValides = new List<List<Point>>();
+        var pointsUtilises = new HashSet<(int, int)>();
+        
+        foreach (var align in aligns)
+        {
+            // Vérifier si cet alignement partage des points avec un alignement déjà marqué
+            bool chevauchement = align.Any(p => pointsUtilises.Contains((p.X, p.Y)));
+            
+            if (!chevauchement)
+            {
+                alignementsValides.Add(align);
+                // Marquer les points de cet alignement comme utilisés
+                foreach (var p in align)
+                {
+                    pointsUtilises.Add((p.X, p.Y));
+                }
+            }
+        }
+        
         int pts = 0;
-        foreach (var a in aligns)
+        foreach (var a in alignementsValides)
         {
             if (AlignementCroiseAdversaire(a, joueur)) continue;
             foreach (var p in a) Grille[p.X, p.Y].Proteger();
@@ -231,28 +254,12 @@ public class Plateau
 
     public bool EstPlacementLegal(int x, int y, Joueur joueur)
     {
+        // Le placement est légal seulement si la position est valide et pas occupée
+        // Le croisement de ligne est un problème seulement lors du TRACÉ de la ligne, pas du placement
         if (!EstPositionValide(x, y)) return false;
         if (Grille[x, y].EstOccupee()) return false;
-
-        var backup = new Cellule { Joueur = Grille[x, y].Joueur, EstTouche = Grille[x, y].EstTouche, EstProtege = Grille[x, y].EstProtege };
-        Grille[x, y].Joueur = joueur;
-        Grille[x, y].EstTouche = false;
-
-        try
-        {
-            var aligns = VerifierAlignements(joueur);
-            foreach (var a in aligns)
-            {
-                if (AlignementCroiseAdversaire(a, joueur)) return false;
-            }
-            return true;
-        }
-        finally
-        {
-            Grille[x, y].Joueur = backup.Joueur;
-            Grille[x, y].EstTouche = backup.EstTouche;
-            Grille[x, y].EstProtege = backup.EstProtege;
-        }
+        
+        return true;
     }
 
     // Vérifier alignements qui incluent explicitement (x,y)
@@ -312,10 +319,30 @@ public class Plateau
     public int MarquerAlignementsDepuis(int x, int y, Joueur joueur)
     {
         var aligns = VerifierAlignementsDepuis(x, y, joueur);
+        
+        // Filtrer pour que deux alignements ne partagent au maximum que 1 point
+        var pointsDejaProteges = new HashSet<(int, int)>();
+        for (int i = 0; i <= Taille; i++)
+        {
+            for (int j = 0; j <= Taille; j++)
+            {
+                if (Grille[i, j].EstProtege)
+                    pointsDejaProteges.Add((i, j));
+            }
+        }
+        
         int pts = 0;
         foreach (var a in aligns)
         {
+            // Compter le nombre de points déjà protégés dans cet alignement
+            int pointsPartages = a.Count(p => pointsDejaProteges.Contains((p.X, p.Y)));
+            
+            // Autoriser seulement si 0 ou 1 point partagé
+            // Refuser si 2+ points partagés (ce serait une superposition trop importante)
+            if (pointsPartages >= 2) continue;
+            
             if (AlignementCroiseAdversaire(a, joueur)) continue;
+            
             foreach (var p in a) Grille[p.X, p.Y].Proteger();
             pts++;
         }
