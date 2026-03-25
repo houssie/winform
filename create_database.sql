@@ -32,3 +32,5 @@ CREATE INDEX idx_gamestate_date ON gamestate(date_sauvegarde DESC);
 
 -- Afficher confirmation
 \dt gamestate
+
+drop table gamestate;

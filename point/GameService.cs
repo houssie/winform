@@ -1,22 +1,17 @@
-using System.Text.Json;
+﻿using System.Text.Json;
+using Microsoft.EntityFrameworkCore;
+using System.Drawing; // For Point
 
 namespace point;
 
 public class GameService
 {
-    private readonly GameDbContext _context;
-
-    public GameService()
-    {
-        _context = new GameDbContext();
-    }
-
     public static void InitializeDatabase()
     {
         try
         {
             using var context = new GameDbContext();
-            context.EnsureDatabaseCreated();
+            context.Database.EnsureCreated();
         }
         catch (Exception ex)
         {
@@ -28,27 +23,41 @@ public class GameService
     {
         try
         {
-            var etatJson = SérialiserGrille(plateau) ?? "[]";
-
-            var gameState = new GameState
+            var data = new GameData
             {
-                NomPartie = nomPartie ?? "Sans nom",
                 DateSauvegarde = DateTime.UtcNow,
-                EtatGrille = etatJson,
                 ScoreRouge = scoreRouge,
                 ScoreBleu = scoreBleu,
                 PositionCanonGauche = Math.Max(0, Math.Min(canonGauche.PositionLigne, 12)),
                 PositionCanonDroit = Math.Max(0, Math.Min(canonDroit.PositionLigne, 12)),
                 PuissanceCanonGauche = Math.Max(0, Math.Min(puissanceGauche, 9)),
-                PuissanceCanonDroit = Math.Max(0, Math.Min(puissanceDroit, 9))
+                PuissanceCanonDroit = Math.Max(0, Math.Min(puissanceDroit, 9)),
+                JoueurRougeActif = joueurRougeActif,
+                Grille = SerializeGrid(plateau),
+                Alignements = plateau.AlignementsAffichage
             };
+
+            var json = JsonSerializer.Serialize(data);
 
             using (var context = new GameDbContext())
             {
-                // Créer la table si elle n'existe pas
                 context.Database.EnsureCreated();
                 
-                context.GameStates.Add(gameState);
+                var existing = context.GameStates.Find(nomPartie);
+                if (existing != null)
+                {
+                    existing.StateJson = json;
+                    existing.UpdatedAt = DateTime.UtcNow;
+                }
+                else
+                {
+                    context.GameStates.Add(new GameState
+                    {
+                        Name = nomPartie,
+                        StateJson = json,
+                        UpdatedAt = DateTime.UtcNow
+                    });
+                }
                 context.SaveChanges();
             }
 
@@ -56,25 +65,18 @@ public class GameService
         }
         catch (Exception ex)
         {
-            string errorMsg = $"Erreur sauvegarde:\n{ex.Message}";
-            if (ex.InnerException != null)
-                errorMsg += $"\n\nDétails:\n{ex.InnerException.Message}";
-            if (ex.InnerException?.InnerException != null)
-                errorMsg += $"\n\nSous-détails:\n{ex.InnerException.InnerException.Message}";
-            MessageBox.Show(errorMsg, "Erreur BD", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show($"Erreur sauvegarde:\n{ex.Message}", "Erreur BD", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 
-    public GameState? ChargerPartie(int id)
+    public GameState? ChargerPartie(string name)
     {
         try
         {
             using (var context = new GameDbContext())
             {
-                // Créer la table si elle n'existe pas
                 context.Database.EnsureCreated();
-                
-                return context.GameStates.FirstOrDefault(g => g.Id == id);
+                return context.GameStates.Find(name);
             }
         }
         catch (Exception ex)
@@ -84,40 +86,37 @@ public class GameService
         }
     }
 
-    public List<GameState> ListeParties()
+    public List<string> ListeParties()
     {
         try
         {
             using (var context = new GameDbContext())
             {
-                // Créer la table si elle n'existe pas
                 context.Database.EnsureCreated();
-                
                 return context.GameStates
-                    .OrderByDescending(g => g.DateSauvegarde)
+                    .OrderByDescending(g => g.UpdatedAt)
+                    .Select(g => g.Name)
                     .ToList();
             }
         }
         catch (Exception ex)
         {
             MessageBox.Show($"Erreur récupération liste:\n{ex.Message}", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            return new List<GameState>();
+            return new List<string>();
         }
     }
 
-    public void SupprimerPartie(int id)
+    public void SupprimerPartie(string name)
     {
         try
         {
             using (var context = new GameDbContext())
             {
-                // Créer la table si elle n'existe pas
                 context.Database.EnsureCreated();
-                
-                var gameState = context.GameStates.Find(id);
-                if (gameState != null)
+                var gs = context.GameStates.Find(name);
+                if (gs != null)
                 {
-                    context.GameStates.Remove(gameState);
+                    context.GameStates.Remove(gs);
                     context.SaveChanges();
                     MessageBox.Show("Partie supprimée", "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
@@ -129,66 +128,75 @@ public class GameService
         }
     }
 
-    public void RestaurerGrille(GameState gameState, Plateau plateau)
+    public GameData? GetGameData(GameState gameState)
+    {
+        try 
+        {
+             return JsonSerializer.Deserialize<GameData>(gameState.StateJson);
+        }
+        catch 
+        {
+            return null;
+        }
+    }
+
+    public void RestaurerGrille(GameData data, Plateau plateau, Joueur joueurA, Joueur joueurB)
     {
         try
         {
-            if (string.IsNullOrEmpty(gameState.EtatGrille)) return;
-
-            var grille = JsonSerializer.Deserialize<List<List<int>>>(gameState.EtatGrille);
-            if (grille == null) return;
-
-            // Restaurer l'état de la grille
+            var grille = data.Grille;
             for (int i = 0; i < grille.Count && i <= plateau.Taille; i++)
             {
                 for (int j = 0; j < grille[i].Count && j <= plateau.Taille; j++)
                 {
                     int cellState = grille[i][j];
-                    
-                    // 0 = vide, 1 = rouge, 2 = bleu, protégé codé en 10+
                     bool estProtege = cellState >= 10;
                     int joueurCode = cellState % 10;
 
                     if (joueurCode == 1)
-                        plateau.Grille[i, j].Joueur = new Joueur("Joueur A", Couleur.Rouge);
+                        plateau.Grille[i, j].Joueur = joueurA;
                     else if (joueurCode == 2)
-                        plateau.Grille[i, j].Joueur = new Joueur("Joueur B", Couleur.Bleu);
+                        plateau.Grille[i, j].Joueur = joueurB;
+                    else
+                        plateau.Grille[i, j].Joueur = null;
 
                     if (estProtege)
                         plateau.Grille[i, j].Proteger();
+                    else 
+                        plateau.Grille[i, j].EstProtege = false;
                 }
+            }
+
+            if (data.Alignements != null)
+            {
+                plateau.AlignementsAffichage = data.Alignements;
             }
         }
         catch (Exception ex)
         {
-            MessageBox.Show($"Erreur restauration grille:\n{ex.Message}", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show($"Erreur restauration:\n{ex.Message}", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 
-    private string SérialiserGrille(Plateau plateau)
+    private List<List<int>> SerializeGrid(Plateau plateau)
     {
         var grille = new List<List<int>>();
-
         for (int i = 0; i <= plateau.Taille; i++)
         {
             var ligne = new List<int>();
             for (int j = 0; j <= plateau.Taille; j++)
             {
                 int cellState = 0;
-
                 if (plateau.Grille[i, j].Joueur != null)
                 {
                     cellState = plateau.Grille[i, j].Joueur.Couleur == Couleur.Rouge ? 1 : 2;
                 }
-
                 if (plateau.Grille[i, j].EstProtege)
                     cellState += 10;
-
                 ligne.Add(cellState);
             }
             grille.Add(ligne);
         }
-
-        return JsonSerializer.Serialize(grille);
+        return grille;
     }
 }

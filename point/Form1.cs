@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Windows.Forms;
 using System.Drawing;
 using Microsoft.VisualBasic;
@@ -35,6 +35,7 @@ public partial class Form1 : Form
     private bool tirEffectueDansPhase = false;
     private Button buttonChoisirTirer = null!;
     private Button buttonChoisirPlacer = null!;
+    private Button buttonTerminerPartie = null!;
     private bool choixExclusifPlacer = false;
     private Label labelPhase = null!;
     private bool attenteChoix = false; // vrai tant que le joueur n'a pas choisi TIRER ou PLACER
@@ -60,6 +61,17 @@ public partial class Form1 : Form
     
     private void InitialiserJeu()
     {
+        // Nettoyage complet pour éviter les bugs de superposition ou d'état
+        this.Controls.Clear();
+        this.MainMenuStrip = null;
+        
+        // Réinitialiser les états du tour
+        enPhaseCanon = false;
+        phaseRequireTir = false;
+        tirEffectueDansPhase = false;
+        choixExclusifPlacer = false;
+        attenteChoix = false;
+
         // Créer le plateau
         plateau = new Plateau(taillePlateau);
         
@@ -89,6 +101,7 @@ public partial class Form1 : Form
         this.Text = "Point+Canon - Jeu de stratégie";
         this.Size = new Size(900, 800);
         this.StartPosition = FormStartPosition.CenterScreen;
+        this.BackColor = Color.FromArgb(45, 45, 48); // Fond sombre moderne
         
         // Calcul taille case et panels (grille n x n)
         int tailleCase = 600 / (taillePlateau);
@@ -107,7 +120,8 @@ public partial class Form1 : Form
         panelGrille = new Panel();
         panelGrille.Location = new Point(20 + tailleCase, 20);
         panelGrille.Size = new Size(600, 600);
-        panelGrille.BackColor = Color.White;
+        // Couleur style "bois" très clair/parchemin
+        panelGrille.BackColor = Color.FromArgb(245, 230, 200); 
         
         // Ajouter un événement Paint pour dessiner la grille et les points
         panelGrille.Paint += PanelGrille_Paint;
@@ -135,9 +149,12 @@ public partial class Form1 : Form
                 int yPos = (i * 600) / taillePlateau - 5;  // centré sur l'intersection
                 btn.Location = new Point(xPos, yPos);
                 btn.Size = new Size(10, 10);  // Petit bouton juste pour le clic
-                btn.BackColor = Color.White;
+                btn.BackColor = Color.Transparent; // transparent pour voir le fond et les lignes
                 btn.FlatStyle = FlatStyle.Flat;
                 btn.FlatAppearance.BorderSize = 0;
+                btn.FlatAppearance.MouseOverBackColor = Color.FromArgb(100, 255, 255, 255);
+                btn.FlatAppearance.MouseDownBackColor = Color.FromArgb(50, 0, 0, 0);
+                btn.Cursor = Cursors.Hand;
                 btn.Tag = new Point(i, j);
                 btn.Click += BtnGrille_Click;
                 
@@ -156,7 +173,9 @@ public partial class Form1 : Form
             bL.Location = new Point(0, yPos);
             bL.Size = new Size(10, 10);
             bL.FlatStyle = FlatStyle.Flat;
+            bL.BackColor = Color.Transparent;
             bL.FlatAppearance.BorderSize = 0;
+            bL.Cursor = Cursors.Hand;
             bL.Tag = i; // stocke la ligne
             bL.Click += BoutonCanonGauche_Click;
             panelLeft.Controls.Add(bL);
@@ -166,7 +185,9 @@ public partial class Form1 : Form
             bR.Location = new Point(0, yPos);
             bR.Size = new Size(10, 10);
             bR.FlatStyle = FlatStyle.Flat;
+            bR.BackColor = Color.Transparent;
             bR.FlatAppearance.BorderSize = 0;
+            bR.Cursor = Cursors.Hand;
             bR.Tag = i; // stocke la ligne
             bR.Click += BoutonCanonDroit_Click;
             panelRight.Controls.Add(bR);
@@ -177,33 +198,36 @@ public partial class Form1 : Form
         Panel panelInfo = new Panel();
         panelInfo.Location = new Point(650, 20);
         panelInfo.Size = new Size(220, 600);
-        panelInfo.BackColor = Color.LightGray;
+        panelInfo.BackColor = Color.FromArgb(60, 60, 65);
+        panelInfo.BorderStyle = BorderStyle.None;
         
         // Label statut
         labelStatus = new Label();
         labelStatus.Location = new Point(10, 20);
-        labelStatus.Size = new Size(200, 30);
-        labelStatus.Font = new Font("Arial", 12, FontStyle.Bold);
-        labelStatus.BorderStyle = BorderStyle.FixedSingle;
-        labelStatus.BackColor = Color.FromArgb(255, 245, 200);
+        labelStatus.Size = new Size(200, 40);
+        labelStatus.Font = new Font("Segoe UI", 12, FontStyle.Bold);
+        labelStatus.ForeColor = Color.White;
+        labelStatus.BackColor = Color.FromArgb(80, 80, 85);
         labelStatus.TextAlign = ContentAlignment.MiddleCenter;
         labelStatus.Padding = new Padding(4);
         panelInfo.Controls.Add(labelStatus);
 
         // Label phase (indicateur clair)
         labelPhase = new Label();
-        labelPhase.Location = new Point(10, 55);
-        labelPhase.Size = new Size(200, 20);
-        labelPhase.Font = new Font("Arial", 9, FontStyle.Bold);
+        labelPhase.Location = new Point(10, 65);
+        labelPhase.Size = new Size(200, 25);
+        labelPhase.Font = new Font("Segoe UI", 9, FontStyle.Italic);
+        labelPhase.ForeColor = Color.LightGray;
         labelPhase.TextAlign = ContentAlignment.MiddleCenter;
         labelPhase.BackColor = Color.Transparent;
         panelInfo.Controls.Add(labelPhase);
         
         // Label score
         labelScore = new Label();
-        labelScore.Location = new Point(10, 80);
+        labelScore.Location = new Point(10, 100);
         labelScore.Size = new Size(200, 60);
-        labelScore.Font = new Font("Arial", 10);
+        labelScore.Font = new Font("Segoe UI", 11);
+        labelScore.ForeColor = Color.WhiteSmoke;
         panelInfo.Controls.Add(labelScore);
         
         // Le choix manuel de canon a été supprimé : le canon est déterminé par le joueur actif.
@@ -214,88 +238,14 @@ public partial class Form1 : Form
         this.Controls.Add(panelLeft);
         this.Controls.Add(panelGrille);
         this.Controls.Add(panelRight);
-        // placer panelInfo à droite du panelRight
-        panelInfo.Location = new Point(panelRight.Right + 20, 20);
-        this.Controls.Add(panelInfo);
-
-        // Dans ConfigurerInterface(), ajoutez après le bouton Tirer :
-
-// Le contrôle de position du canon et son bouton ont été retirés :
-// on déplace désormais les canons via les boutons latéraux.
-
-    // Bouton pour terminer la phase canon / finir le tour
-    // Le bouton "FINIR LE TOUR" a été retiré : le tour se termine automatiquement
-    // après les actions requises (placement ou tir).
-
-    // Boutons d'action non-modal: Tirer ou Placer (montrent au début du tour)
-    buttonChoisirTirer = new Button();
-    buttonChoisirTirer.Text = "CHOISIR: TIRER";
-    buttonChoisirTirer.Location = new Point(10, 310);
-    buttonChoisirTirer.Size = new Size(95, 30);
-    buttonChoisirTirer.BackColor = Color.LightSalmon;
-    buttonChoisirTirer.Visible = false;
-    buttonChoisirTirer.Click += ButtonChoisirTirer_Click;
-    panelInfo.Controls.Add(buttonChoisirTirer);
-
-    buttonChoisirPlacer = new Button();
-    buttonChoisirPlacer.Text = "CHOISIR: PLACER";
-    buttonChoisirPlacer.Location = new Point(115, 310);
-    buttonChoisirPlacer.Size = new Size(95, 30);
-    buttonChoisirPlacer.BackColor = Color.LightGreen;
-    buttonChoisirPlacer.Visible = false;
-    buttonChoisirPlacer.Click += ButtonChoisirPlacer_Click;
-    panelInfo.Controls.Add(buttonChoisirPlacer);
-
-    // Légende explicative
-    GroupBox legendBox = new GroupBox();
-    legendBox.Text = "Légende";
-    legendBox.Location = new Point(10, 460);
-    legendBox.Size = new Size(200, 140);
-    legendBox.Font = new Font("Arial", 9, FontStyle.Regular);
-
-    Label l1 = new Label();
-    l1.Text = "● Joueur A (Rouge)";
-    l1.Location = new Point(10, 20);
-    l1.Size = new Size(180, 20);
-    l1.ForeColor = Color.Red;
-    legendBox.Controls.Add(l1);
-
-    Label l2 = new Label();
-    l2.Text = "○ Joueur B (Bleu)";
-    l2.Location = new Point(10, 40);
-    l2.Size = new Size(180, 20);
-    l2.ForeColor = Color.Blue;
-    legendBox.Controls.Add(l2);
-
-    Label l3 = new Label();
-    l3.Text = "Fond vert: point protégé";
-    l3.Location = new Point(10, 60);
-    l3.Size = new Size(180, 20);
-    legendBox.Controls.Add(l3);
-
-    Label l4 = new Label();
-    l4.Text = "Canon gauche : Joueur A (Rouge)";
-    l4.Location = new Point(10, 80);
-    l4.Size = new Size(180, 20);
-    l4.ForeColor = Color.Red;
-    legendBox.Controls.Add(l4);
-
-    Label l5 = new Label();
-    l5.Text = "Canon droite : Joueur B (Bleu)";
-    l5.Location = new Point(10, 100);
-    l5.Size = new Size(180, 20);
-    l5.ForeColor = Color.Blue;
-    legendBox.Controls.Add(l5);
-
-    Label l6 = new Label();
-    l6.Text = "Utiliser 'TIRER AU CANON' pour tirer";
-    l6.Location = new Point(10, 120);
-    l6.Size = new Size(180, 20);
-    legendBox.Controls.Add(l6);
-
-    panelInfo.Controls.Add(legendBox);
-
+        
+        // Redimensionner la fenêtre et configurer le menu principal
+        this.Size = new Size(1100, 750); // Plus large et plus haute
+        
   MenuStrip menuStrip = new MenuStrip();
+  menuStrip.BackColor = Color.FromArgb(235, 235, 235); // Menu clair
+  menuStrip.ForeColor = Color.Black;
+  menuStrip.Renderer = new ToolStripProfessionalRenderer(); // Style plus natif
     
     // Menu Fichier
     ToolStripMenuItem menuFichier = new ToolStripMenuItem("Fichier");
@@ -307,26 +257,136 @@ public partial class Form1 : Form
     nouvellePartie.Click += NouvellePartie_Click;
     sauvegarder.Click += Sauvegarder_Click;
     charger.Click += Charger_Click;
-    quitter.Click += (s, e) => Application.Exit();
+    quitter.Click += (s,e) => Application.Exit();
     
-    menuFichier.DropDownItems.AddRange(new ToolStripMenuItem[] { 
-        nouvellePartie, sauvegarder, charger, quitter });
+    menuFichier.DropDownItems.Add(nouvellePartie);
+    menuFichier.DropDownItems.Add(sauvegarder);
+    menuFichier.DropDownItems.Add(charger);
+    menuFichier.DropDownItems.Add(new ToolStripSeparator());
+    menuFichier.DropDownItems.Add(quitter);
     
     // Menu Aide
     ToolStripMenuItem menuAide = new ToolStripMenuItem("Aide");
     ToolStripMenuItem regles = new ToolStripMenuItem("Règles du jeu");
     regles.Click += Regles_Click;
+    ToolStripMenuItem aPropos = new ToolStripMenuItem("À propos");
+    aPropos.Click += (s,e) => MessageBox.Show("Point+Canon\nVersion 1.0\nJeu de stratégie tour par tour.", "À propos", MessageBoxButtons.OK, MessageBoxIcon.Information);
     menuAide.DropDownItems.Add(regles);
+    menuAide.DropDownItems.Add(aPropos);
     
-    menuStrip.Items.AddRange(new ToolStripMenuItem[] { menuFichier, menuAide });
+    menuStrip.Items.Add(menuFichier);
+    menuStrip.Items.Add(menuAide);
     
     this.MainMenuStrip = menuStrip;
     this.Controls.Add(menuStrip);
 
-    // Ajouter option pour changer la taille du plateau à la volée
+        // Ajuster les panneaux sous le menu (Y = 40 au lieu de 20)
+        panelLeft.Location = new Point(20, 50);
+        panelGrille.Location = new Point(20 + tailleCase, 50);
+        panelRight.Location = new Point(panelGrille.Left + panelGrille.Width, 40);
+        
+        // placer panelInfo à droite du panelRight (encore plus large et mieux aéré)
+        panelInfo.Location = new Point(panelRight.Right + 30, 40);
+        panelInfo.Size = new Size(280, 600); // Passé de 250 à 280
+        this.Controls.Add(panelInfo);
+
+    // Boutons d'action non-modal: Tirer ou Placer (montrent au début du tour)
+    buttonChoisirTirer = new Button();
+    buttonChoisirTirer.Text = "TIRER";
+    buttonChoisirTirer.Location = new Point(15, 180);
+    buttonChoisirTirer.Size = new Size(120, 50); // Plus gros
+    buttonChoisirTirer.BackColor = Color.FromArgb(220, 53, 69); // Bootstrap Danger
+    buttonChoisirTirer.ForeColor = Color.White;
+    buttonChoisirTirer.Font = new Font("Segoe UI", 11, FontStyle.Bold);
+    buttonChoisirTirer.FlatStyle = FlatStyle.Flat;
+    buttonChoisirTirer.FlatAppearance.BorderSize = 0;
+    buttonChoisirTirer.Cursor = Cursors.Hand;
+    buttonChoisirTirer.Visible = false;
+    buttonChoisirTirer.Click += ButtonChoisirTirer_Click;
+    panelInfo.Controls.Add(buttonChoisirTirer);
+
+    buttonChoisirPlacer = new Button();
+    buttonChoisirPlacer.Text = "PLACER";
+    buttonChoisirPlacer.Location = new Point(145, 180); // Espacement ajusté
+    buttonChoisirPlacer.Size = new Size(120, 50); // Plus gros
+    buttonChoisirPlacer.BackColor = Color.FromArgb(40, 167, 69); // Bootstrap Success
+    buttonChoisirPlacer.ForeColor = Color.White;
+    buttonChoisirPlacer.Font = new Font("Segoe UI", 11, FontStyle.Bold);
+    buttonChoisirPlacer.FlatStyle = FlatStyle.Flat;
+    buttonChoisirPlacer.FlatAppearance.BorderSize = 0;
+    buttonChoisirPlacer.Cursor = Cursors.Hand;
+    buttonChoisirPlacer.Visible = false;
+    buttonChoisirPlacer.Click += ButtonChoisirPlacer_Click;
+    panelInfo.Controls.Add(buttonChoisirPlacer);
+
+    // Légende explicative modernisée
+    GroupBox legendBox = new GroupBox();
+    legendBox.Text = "Légende & Infos";
+    legendBox.Location = new Point(15, 280);
+    legendBox.Size = new Size(250, 180); // Plus large
+    legendBox.Font = new Font("Segoe UI", 11, FontStyle.Bold);
+    legendBox.ForeColor = Color.WhiteSmoke;
+
+    Label l1 = new Label();
+    l1.Text = "● Joueur A (Rouge)";
+    l1.Location = new Point(15, 30);
+    l1.Size = new Size(220, 20);
+    l1.Font = new Font("Segoe UI", 10, FontStyle.Regular);
+    l1.ForeColor = Color.LightCoral;
+    legendBox.Controls.Add(l1);
+
+    Label l2 = new Label();
+    l2.Text = "● Joueur B (Bleu)"; // Plein ici aussi dans la legende
+    l2.Location = new Point(15, 55);
+    l2.Size = new Size(220, 20);
+    l2.Font = new Font("Segoe UI", 10, FontStyle.Regular);
+    l2.ForeColor = Color.LightSkyBlue;
+    legendBox.Controls.Add(l2);
+
+    Label l3 = new Label();
+    l3.Text = "Ligne Verte : Alignement valide";
+    l3.Location = new Point(15, 80);
+    l3.Size = new Size(220, 20);
+    l3.Font = new Font("Segoe UI", 10, FontStyle.Regular);
+    l3.ForeColor = Color.LightGreen;
+    legendBox.Controls.Add(l3);
+
+    Label l4 = new Label();
+    l4.Text = "Contrôles :";
+    l4.Location = new Point(15, 115);
+    l4.Size = new Size(220, 20);
+    l4.Font = new Font("Segoe UI", 10, FontStyle.Bold);
+    l4.ForeColor = Color.White;
+    legendBox.Controls.Add(l4);
+
+    Label l5 = new Label();
+    l5.Text = "Ctrl + 1 à 9 : Puissance de tir";
+    l5.Location = new Point(15, 140);
+    l5.Size = new Size(220, 20);
+    l5.Font = new Font("Segoe UI", 10, FontStyle.Regular);
+    l5.ForeColor = Color.LightGray;
+    legendBox.Controls.Add(l5);
+
+    panelInfo.Controls.Add(legendBox);
+
+    buttonTerminerPartie = new Button();
+    buttonTerminerPartie.Text = "TERMINER LA PARTIE";
+    buttonTerminerPartie.Location = new Point(15, 480);
+    buttonTerminerPartie.Size = new Size(250, 40);
+    buttonTerminerPartie.BackColor = Color.FromArgb(200, 50, 50);
+    buttonTerminerPartie.ForeColor = Color.White;
+    buttonTerminerPartie.Font = new Font("Segoe UI", 10, FontStyle.Bold);
+    buttonTerminerPartie.FlatStyle = FlatStyle.Flat;
+    buttonTerminerPartie.FlatAppearance.BorderSize = 0;
+    buttonTerminerPartie.Cursor = Cursors.Hand;
+    buttonTerminerPartie.Click += TerminerPartie_Click;
+    panelInfo.Controls.Add(buttonTerminerPartie);
+
+    // Ajouter l'option manquante (Changer taille) et les events clavier :
     ToolStripMenuItem changerTaille = new ToolStripMenuItem("Changer taille...");
     changerTaille.Click += ChangerTaille_Click;
-    menuFichier.DropDownItems.Add(changerTaille);
+    menuFichier.DropDownItems.Insert(1, changerTaille);
+    
     // Permettre au formulaire d'intercepter les touches (raccourcis clavier)
     this.KeyPreview = true;
     this.KeyDown += Form1_KeyDown;
@@ -439,8 +499,6 @@ public partial class Form1 : Form
     {
         Log($"ButtonTirer_Click: tir EFFECTIF par {tireur?.Nom}");
         MettreAJourAffichage();
-        // Vérifier si le tir a créé un alignement pour le joueur courant (déjà basculé)
-        VerifierAlignements(joueurActuel);
         // Démarrer le tour suivant (le joueur a déjà été basculé)
         DemarrerTour();
     }
@@ -587,8 +645,10 @@ public partial class Form1 : Form
 
     private void PanelGrille_Paint(object? sender, PaintEventArgs e)
     {
+        e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+
         // Dessiner la grille
-        using (Pen gridPen = new Pen(Color.Black, 1))
+        using (Pen gridPen = new Pen(Color.FromArgb(100, 139, 69, 19), 1.5f))
         {
             for (int k = 0; k <= taillePlateau; k++)
             {
@@ -603,8 +663,12 @@ public partial class Form1 : Form
         // Dessiner les lignes des alignements en premier (derrière les points)
         if (plateau != null && plateau.AlignementsAffichage.Count > 0)
         {
-            using (Pen linePen = new Pen(Color.Green, 3))
+            using (Pen linePen = new Pen(Color.ForestGreen, 6))
             {
+                // Coins arrondis pour avoir un design plus moderne
+                linePen.StartCap = System.Drawing.Drawing2D.LineCap.Round;
+                linePen.EndCap = System.Drawing.Drawing2D.LineCap.Round;
+                
                 foreach (var alignment in plateau.AlignementsAffichage)
                 {
                     if (alignment.Count < 2) continue;
@@ -645,17 +709,19 @@ public partial class Form1 : Form
                 {
                     if (cellule.Joueur.Couleur == Couleur.Rouge)
                     {
-                        // Point plein rouge
-                        using (Brush brush = new SolidBrush(Color.Red))
+                        // Point plein rouge moderne
+                        using (Brush brush = new SolidBrush(Color.Crimson))
                         {
                             e.Graphics.FillEllipse(brush, xCenter - rayon, yCenter - rayon, rayon * 2, rayon * 2);
                         }
                     }
                     else
                     {
-                        // Point creux bleu
-                        using (Pen pen = new Pen(Color.Blue, 2))
+                        // Point creux bleu (on le fait en plein avec dégradé ou couleur unie plus moderne)
+                        using (Brush brush = new SolidBrush(Color.RoyalBlue))
+                        using (Pen pen = new Pen(Color.White, 2)) // Petit effet contour 
                         {
+                            e.Graphics.FillEllipse(brush, xCenter - rayon, yCenter - rayon, rayon * 2, rayon * 2);
                             e.Graphics.DrawEllipse(pen, xCenter - rayon, yCenter - rayon, rayon * 2, rayon * 2);
                         }
                     }
@@ -690,42 +756,66 @@ public partial class Form1 : Form
     private void PanelCanonGauche_Paint(object? sender, PaintEventArgs e)
     {
         if (canonGauche == null) return;
+        
+        e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
 
         int yCenter = (canonGauche.PositionLigne * 600) / taillePlateau;
-        int rayon = 8;
+        int rayon = 12;
         
-        // Dessiner le canon gauche en rouge
-        using (Brush brush = new SolidBrush(Color.Red))
+        // Dessiner le canon gauche stylisé
+        using (Brush barrelBrush = new SolidBrush(Color.DarkGray))
+        {
+            // Dessiner un "canon" rectangulaire pointant vers la droite
+            e.Graphics.FillRectangle(barrelBrush, 20, yCenter - 6, 20, 12);
+        }
+        
+        using (Brush brush = new SolidBrush(Color.Crimson))
         {
             e.Graphics.FillEllipse(brush, 20 - rayon, yCenter - rayon, rayon * 2, rayon * 2);
+            using (Pen pen = new Pen(Color.DarkRed, 2))
+            {
+                e.Graphics.DrawEllipse(pen, 20 - rayon, yCenter - rayon, rayon * 2, rayon * 2);
+            }
         }
         
         // Dessiner "A" 
-        using (Font font = new Font("Arial", 8, FontStyle.Bold))
+        using (Font font = new Font("Segoe UI", 9, FontStyle.Bold))
         using (Brush textBrush = new SolidBrush(Color.White))
         {
-            e.Graphics.DrawString("A", font, textBrush, 15, yCenter - 6);
+            e.Graphics.DrawString("A", font, textBrush, 14, yCenter - 8);
         }
     }
 
     private void PanelCanonDroit_Paint(object? sender, PaintEventArgs e)
     {
         if (canonDroit == null) return;
+        
+        e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
 
         int yCenter = (canonDroit.PositionLigne * 600) / taillePlateau;
-        int rayon = 8;
+        int rayon = 12;
         
-        // Dessiner le canon droit en bleu (cercle creux)
-        using (Pen pen = new Pen(Color.Blue, 2))
+        // Dessiner le canon droit stylisé
+        using (Brush barrelBrush = new SolidBrush(Color.DarkGray))
         {
-            e.Graphics.DrawEllipse(pen, 20 - rayon, yCenter - rayon, rayon * 2, rayon * 2);
+            // Dessiner un "canon" rectangulaire pointant vers la gauche
+            e.Graphics.FillRectangle(barrelBrush, 20 - 20, yCenter - 6, 20, 12);
+        }
+        
+        using (Brush brush = new SolidBrush(Color.RoyalBlue))
+        {
+            e.Graphics.FillEllipse(brush, 20 - rayon, yCenter - rayon, rayon * 2, rayon * 2);
+            using (Pen borderPen = new Pen(Color.White, 2))
+            {
+                e.Graphics.DrawEllipse(borderPen, 20 - rayon, yCenter - rayon, rayon * 2, rayon * 2);
+            }
         }
         
         // Dessiner "B"
-        using (Font font = new Font("Arial", 8, FontStyle.Bold))
-        using (Brush textBrush = new SolidBrush(Color.Blue))
+        using (Font font = new Font("Segoe UI", 9, FontStyle.Bold))
+        using (Brush textBrush = new SolidBrush(Color.White))
         {
-            e.Graphics.DrawString("B", font, textBrush, 15, yCenter - 6);
+            e.Graphics.DrawString("B", font, textBrush, 14, yCenter - 8);
         }
     }
 
@@ -818,11 +908,9 @@ public partial class Form1 : Form
 
 private async Task AnimerTir(int ligne, int puissance, CoteCanon cote)
 {
-    // Calculer colonneCible exactement comme Plateau.TirerCanon()
-    double resultat = (puissance - 1) * plateau.Taille / 8.0;
-    int rawCol = (int)resultat;
-    if (rawCol < 0) rawCol = 0;
-    if (rawCol > plateau.Taille) rawCol = plateau.Taille;
+        // Calculer colonneCible exactement comme Plateau.TirerCanon() avec arrondi proportionnel
+        double resultat = (puissance - 1) * plateau.Taille / 8.0;
+        int rawCol = (int)Math.Round(resultat, MidpointRounding.AwayFromZero);
     
     int colonne = (cote == CoteCanon.Droit) ? (plateau.Taille - rawCol) : rawCol;
     
@@ -938,6 +1026,35 @@ Les points alignés deviennent protégés et rapportent 1 point.";
         MessageBoxButtons.OK, MessageBoxIcon.Information);
 }
 
+private void TerminerPartie_Click(object? sender, EventArgs e)
+{
+    string message = "Partie terminée !\n\n";
+    message += $"Score {joueurA.Nom} (Rouge): {joueurA.Score}\n";
+    message += $"Score {joueurB.Nom} (Bleu): {joueurB.Score}\n\n";
+
+    if (joueurA.Score > joueurB.Score)
+    {
+        message += $"🏆 {joueurA.Nom} gagne la partie !";
+    }
+    else if (joueurB.Score > joueurA.Score)
+    {
+        message += $"🏆 {joueurB.Nom} gagne la partie !";
+    }
+    else
+    {
+        message += "🤝 Match nul !";
+    }
+
+    MessageBox.Show(message, "Résultat final", MessageBoxButtons.OK, MessageBoxIcon.Information);
+    
+    // Demander si on veut rejouer
+    var result = MessageBox.Show("Voulez-vous commencer une nouvelle partie ?", "Rejouer ?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+    if (result == DialogResult.Yes)
+    {
+        NouvellePartie_Click(sender, e);
+    }
+}
+
 private void NouvellePartie_Click(object? sender, EventArgs e)
 {
     InitialiserJeu();
@@ -945,18 +1062,18 @@ private void NouvellePartie_Click(object? sender, EventArgs e)
     MessageBox.Show("Nouvelle partie démarrée.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
 }
 
+
 private void Charger_Click(object? sender, EventArgs e)
 {
     try
     {
-        var parties = gameService.ListeParties();
+        var parties = gameService.ListeParties(); // returns List<string> (names)
         if (parties.Count == 0)
         {
             MessageBox.Show("Aucune partie sauvegardée.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
             return;
         }
 
-        // Créer un formulaire pour choisir la partie
         using (var form = new Form())
         {
             form.Text = "Charger une partie";
@@ -968,8 +1085,10 @@ private void Charger_Click(object? sender, EventArgs e)
             var listBox = new ListBox();
             listBox.Dock = DockStyle.Top;
             listBox.Height = 200;
-            foreach (var p in parties)
-                listBox.Items.Add($"{p.NomPartie} ({p.DateSauvegarde:g})");
+            foreach (var nom in parties)
+            {
+                listBox.Items.Add(nom);
+            }
             form.Controls.Add(listBox);
 
             var btnCharger = new Button { Text = "Charger", Dock = DockStyle.Bottom, Height = 30 };
@@ -981,9 +1100,13 @@ private void Charger_Click(object? sender, EventArgs e)
             {
                 if (listBox.SelectedIndex >= 0)
                 {
-                    var gameState = parties[listBox.SelectedIndex];
-                    ChargerEtatPartie(gameState);
-                    form.DialogResult = DialogResult.OK;
+                    string selectedName = (string)listBox.Items[listBox.SelectedIndex];
+                    var gameState = gameService.ChargerPartie(selectedName);
+                    if (gameState != null)
+                    {
+                        ChargerEtatPartie(gameState);
+                        form.DialogResult = DialogResult.OK;
+                    }
                 }
             };
 
@@ -1001,25 +1124,35 @@ private void ChargerEtatPartie(GameState gameState)
 {
     try
     {
+        var data = gameService.GetGameData(gameState);
+        if (data == null)
+        {
+            MessageBox.Show("Impossible de lire les données JSON de la partie.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+        }
+
         // Créer nouveau plateau
         plateau = new Plateau(taillePlateau);
         
         // Restaurer les scores
-        joueurA.Score = gameState.ScoreRouge;
-        joueurB.Score = gameState.ScoreBleu;
+        joueurA.Score = data.ScoreRouge;
+        joueurB.Score = data.ScoreBleu;
         
         // Restaurer positions canons
-        canonGauche.Deplacer(gameState.PositionCanonGauche, taillePlateau);
-        canonDroit.Deplacer(gameState.PositionCanonDroit, taillePlateau);
+        canonGauche.Deplacer(data.PositionCanonGauche, taillePlateau);
+        canonDroit.Deplacer(data.PositionCanonDroit, taillePlateau);
         
         // Restaurer puissances
-        puissanceCourante = gameState.PuissanceCanonGauche;
+        puissanceCourante = data.PuissanceCanonGauche;
+
+        // Restaurer le joueur actif
+        joueurActuel = data.JoueurRougeActif ? joueurA : joueurB;
         
-        // Restaurer la grille depuis JSON
-        gameService.RestaurerGrille(gameState, plateau);
+        // Restaurer la grille depuis les données
+        gameService.RestaurerGrille(data, plateau, joueurA, joueurB);
         
         MettreAJourAffichage();
-        MessageBox.Show("Partie chargée avec succès.", "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        MessageBox.Show($"Partie '{gameState.Name}' chargée avec succès.", "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
     }
     catch (Exception ex)
     {

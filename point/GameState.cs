@@ -1,45 +1,35 @@
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Drawing;
 
 namespace point;
 
-[Table("gamestate")]
+[Table("pointcanon_games")]
 public class GameState
 {
     [Key]
-    [Column("id")]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public int Id { get; set; }
+    [Column("name")]
+    public string Name { get; set; } = null!;
 
-    [Column("nom_partie")]
-    public string NomPartie { get; set; } = "Partie sans nom";
+    [Column("state_json", TypeName = "jsonb")]
+    public string StateJson { get; set; } = null!;
 
-    [Column("date_creation")]
-    public DateTime DateCreation { get; set; } = DateTime.UtcNow;
+    [Column("updated_at")]
+    public DateTime UpdatedAt { get; set; }
+}
 
-    [Column("date_sauvegarde")]
-    public DateTime DateSauvegarde { get; set; } = DateTime.UtcNow;
-
-    // États du jeu en JSON pour flexibilité
-    [Column("etat_grille")]
-    public string? EtatGrille { get; set; }
-
-    [Column("score_rouge")]
+public class GameData
+{
+    public DateTime DateSauvegarde { get; set; }
     public int ScoreRouge { get; set; }
-
-    [Column("score_bleu")]
     public int ScoreBleu { get; set; }
-
-    [Column("position_canon_gauche")]
-    public int PositionCanonGauche { get; set; }
-
-    [Column("position_canon_droit")]
-    public int PositionCanonDroit { get; set; }
-
-    [Column("puissance_canon_gauche")]
+    public int PositionCanonGauche { get; set; } // Ligne (0..12)
+    public int PositionCanonDroit { get; set; }  // Ligne (0..12)
     public int PuissanceCanonGauche { get; set; }
-
-    [Column("puissance_canon_droit")]
     public int PuissanceCanonDroit { get; set; }
+    public bool JoueurRougeActif { get; set; }
+    public List<List<int>> Grille { get; set; } = new();
+    public List<List<Point>>? Alignements { get; set; }
 }
