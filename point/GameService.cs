@@ -13,14 +13,14 @@ public class GameService
 
     public static void InitializeDatabase()
     {
-        using var context = new GameDbContext();
         try
         {
-            context.Database.EnsureCreated();
+            using var context = new GameDbContext();
+            context.EnsureDatabaseCreated();
         }
         catch (Exception ex)
         {
-            MessageBox.Show($"Erreur connexion PostgreSQL:\n{ex.Message}", "Erreur BD", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show($"Erreur initialisation base de données:\n{ex.Message}", "Erreur BD", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 
@@ -28,29 +28,40 @@ public class GameService
     {
         try
         {
-            var etatJson = SérialiserGrille(plateau);
+            var etatJson = SérialiserGrille(plateau) ?? "[]";
 
             var gameState = new GameState
             {
-                NomPartie = nomPartie,
-                DateSauvegarde = DateTime.Now,
+                NomPartie = nomPartie ?? "Sans nom",
+                DateSauvegarde = DateTime.UtcNow,
                 EtatGrille = etatJson,
                 ScoreRouge = scoreRouge,
                 ScoreBleu = scoreBleu,
-                PositionCanonGauche = canonGauche.PositionLigne,
-                PositionCanonDroit = canonDroit.PositionLigne,
-                PuissanceCanonGauche = puissanceGauche,
-                PuissanceCanonDroit = puissanceDroit
+                PositionCanonGauche = Math.Max(0, Math.Min(canonGauche.PositionLigne, 12)),
+                PositionCanonDroit = Math.Max(0, Math.Min(canonDroit.PositionLigne, 12)),
+                PuissanceCanonGauche = Math.Max(0, Math.Min(puissanceGauche, 9)),
+                PuissanceCanonDroit = Math.Max(0, Math.Min(puissanceDroit, 9))
             };
 
-            _context.GameStates.Add(gameState);
-            _context.SaveChanges();
+            using (var context = new GameDbContext())
+            {
+                // Créer la table si elle n'existe pas
+                context.Database.EnsureCreated();
+                
+                context.GameStates.Add(gameState);
+                context.SaveChanges();
+            }
 
             MessageBox.Show($"Partie sauvegardée : {nomPartie}", "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         catch (Exception ex)
         {
-            MessageBox.Show($"Erreur sauvegarde:\n{ex.Message}", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            string errorMsg = $"Erreur sauvegarde:\n{ex.Message}";
+            if (ex.InnerException != null)
+                errorMsg += $"\n\nDétails:\n{ex.InnerException.Message}";
+            if (ex.InnerException?.InnerException != null)
+                errorMsg += $"\n\nSous-détails:\n{ex.InnerException.InnerException.Message}";
+            MessageBox.Show(errorMsg, "Erreur BD", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 
@@ -58,7 +69,13 @@ public class GameService
     {
         try
         {
-            return _context.GameStates.FirstOrDefault(g => g.Id == id);
+            using (var context = new GameDbContext())
+            {
+                // Créer la table si elle n'existe pas
+                context.Database.EnsureCreated();
+                
+                return context.GameStates.FirstOrDefault(g => g.Id == id);
+            }
         }
         catch (Exception ex)
         {
@@ -71,9 +88,15 @@ public class GameService
     {
         try
         {
-            return _context.GameStates
-                .OrderByDescending(g => g.DateSauvegarde)
-                .ToList();
+            using (var context = new GameDbContext())
+            {
+                // Créer la table si elle n'existe pas
+                context.Database.EnsureCreated();
+                
+                return context.GameStates
+                    .OrderByDescending(g => g.DateSauvegarde)
+                    .ToList();
+            }
         }
         catch (Exception ex)
         {
@@ -86,12 +109,18 @@ public class GameService
     {
         try
         {
-            var gameState = _context.GameStates.Find(id);
-            if (gameState != null)
+            using (var context = new GameDbContext())
             {
-                _context.GameStates.Remove(gameState);
-                _context.SaveChanges();
-                MessageBox.Show("Partie supprimée", "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                // Créer la table si elle n'existe pas
+                context.Database.EnsureCreated();
+                
+                var gameState = context.GameStates.Find(id);
+                if (gameState != null)
+                {
+                    context.GameStates.Remove(gameState);
+                    context.SaveChanges();
+                    MessageBox.Show("Partie supprimée", "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
             }
         }
         catch (Exception ex)
@@ -121,9 +150,9 @@ public class GameService
                     int joueurCode = cellState % 10;
 
                     if (joueurCode == 1)
-                        plateau.Grille[i, j].Joueur = new Joueur { Couleur = "Rouge" };
+                        plateau.Grille[i, j].Joueur = new Joueur("Joueur A", Couleur.Rouge);
                     else if (joueurCode == 2)
-                        plateau.Grille[i, j].Joueur = new Joueur { Couleur = "Bleu" };
+                        plateau.Grille[i, j].Joueur = new Joueur("Joueur B", Couleur.Bleu);
 
                     if (estProtege)
                         plateau.Grille[i, j].Proteger();
@@ -149,7 +178,7 @@ public class GameService
 
                 if (plateau.Grille[i, j].Joueur != null)
                 {
-                    cellState = plateau.Grille[i, j].Joueur.Couleur == "Rouge" ? 1 : 2;
+                    cellState = plateau.Grille[i, j].Joueur.Couleur == Couleur.Rouge ? 1 : 2;
                 }
 
                 if (plateau.Grille[i, j].EstProtege)

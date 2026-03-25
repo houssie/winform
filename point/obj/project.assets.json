@@ -2289,6 +2289,7 @@
   },
   "projectFileDependencyGroups": {
     "net8.0-windows7.0": [
+      "Microsoft.EntityFrameworkCore.Design >= 8.0.2",
       "Microsoft.EntityFrameworkCore.Tools >= 8.0.2",
       "Npgsql.EntityFrameworkCore.PostgreSQL >= 8.0.2"
     ]
@@ -2335,6 +2336,10 @@
       "net8.0-windows7.0": {
         "targetAlias": "net8.0-windows",
         "dependencies": {
+          "Microsoft.EntityFrameworkCore.Design": {
+            "target": "Package",
+            "version": "[8.0.2, )"
+          },
           "Microsoft.EntityFrameworkCore.Tools": {
             "target": "Package",
             "version": "[8.0.2, )"

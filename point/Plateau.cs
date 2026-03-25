@@ -55,9 +55,9 @@ public class Plateau
 
     public int CalculerColonneCible(int puissance)
     {
-        // Map puissance 0..9 to column 0..Taille (Taille+1 colonnes)
-        // Prendre juste la partie entière sans arrondir
-        double resultat = (puissance * Taille) / 9.0;
+        // Map puissance 1..9 to column 0..Taille
+        // Puissance 1 -> 0, Puissance 9 -> Taille
+        double resultat = (puissance - 1) * Taille / 8.0;
         int col = (int)resultat;  // Troncature: partie entière uniquement
         if (col < 0) col = 0;
         if (col > Taille) col = Taille;

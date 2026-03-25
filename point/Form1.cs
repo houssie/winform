@@ -419,8 +419,6 @@ public partial class Form1 : Form
         CoteCanon cote = (joueurActuel == joueurA) ? CoteCanon.Gauche : CoteCanon.Droit;
 
     int ligneCanon = (cote == CoteCanon.Gauche) ? canonGauche.PositionLigne : canonDroit.PositionLigne;
-    int rawCol = plateau.CalculerColonneCible(puissance);
-    int colonneCible = (cote == CoteCanon.Droit) ? (plateau.Taille - 1 - rawCol) : rawCol;
 
     // Prévenir réentrance : mémoriser le tireur et passer immédiatement au joueur suivant
     Joueur tireur = joueurActuel;
@@ -433,13 +431,13 @@ public partial class Form1 : Form
     joueurActuel = suivant;
     MettreAJourAffichage();
 
-    // Animation du tir (affiche la cible correcte selon le côté)
-    await AnimerTir(ligneCanon, colonneCible, cote);
+    // Animation du tir - passer puissance et cote pour que AnimerTir calcule colonneCible
+    await AnimerTir(ligneCanon, puissance, cote);
 
     // Effectuer le tir en utilisant le tireur mémorisé
     if (plateau.TirerCanon(ligneCanon, puissance, cote, tireur))
     {
-        Log($"ButtonTirer_Click: tir EFFECTIF par {tireur?.Nom} sur ({ligneCanon},{colonneCible})");
+        Log($"ButtonTirer_Click: tir EFFECTIF par {tireur?.Nom}");
         MettreAJourAffichage();
         // Vérifier si le tir a créé un alignement pour le joueur courant (déjà basculé)
         VerifierAlignements(joueurActuel);
@@ -448,7 +446,7 @@ public partial class Form1 : Form
     }
     else
     {
-        Log($"ButtonTirer_Click: tir SANS EFFET par {tireur?.Nom} sur ({ligneCanon},{colonneCible})");
+        Log($"ButtonTirer_Click: tir SANS EFFET par {tireur?.Nom} sur la ligne {ligneCanon}");
         MessageBox.Show("Tir sans effet ou position invalide!", "Information", 
             MessageBoxButtons.OK, MessageBoxIcon.Information);
         // Même en cas de tir sans effet, on considère le tir comme consommé et on termine la phase
@@ -803,8 +801,16 @@ public partial class Form1 : Form
 
     // Le bouton de déplacement manuel a été supprimé : déplacement via boutons latéraux.
 
-private async Task AnimerTir(int ligne, int colonne, CoteCanon cote)
+private async Task AnimerTir(int ligne, int puissance, CoteCanon cote)
 {
+    // Calculer colonneCible exactement comme Plateau.TirerCanon()
+    double resultat = (puissance - 1) * plateau.Taille / 8.0;
+    int rawCol = (int)resultat;
+    if (rawCol < 0) rawCol = 0;
+    if (rawCol > plateau.Taille) rawCol = plateau.Taille;
+    
+    int colonne = (cote == CoteCanon.Droit) ? (plateau.Taille - rawCol) : rawCol;
+    
     // Sécurité : vérifier bornes avant d'accéder au tableau
     if (ligne < 0 || ligne > taillePlateau || colonne < 0 || colonne > taillePlateau)
     {

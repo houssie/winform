@@ -8,6 +8,7 @@ namespace point;
 public class GameState
 {
     [Key]
+    [Column("id")]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
 
@@ -15,10 +16,10 @@ public class GameState
     public string NomPartie { get; set; } = "Partie sans nom";
 
     [Column("date_creation")]
-    public DateTime DateCreation { get; set; } = DateTime.Now;
+    public DateTime DateCreation { get; set; } = DateTime.UtcNow;
 
     [Column("date_sauvegarde")]
-    public DateTime DateSauvegarde { get; set; } = DateTime.Now;
+    public DateTime DateSauvegarde { get; set; } = DateTime.UtcNow;
 
     // États du jeu en JSON pour flexibilité
     [Column("etat_grille")]

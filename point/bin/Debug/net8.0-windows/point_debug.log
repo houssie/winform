@@ -824,3 +824,660 @@
 [2026-03-24 12:44:41.784] ButtonTirer_Click: début - tireur=Joueur B, puissance=8
 [2026-03-24 12:44:41.997] ButtonTirer_Click: tir EFFECTIF par Joueur B sur (1,1)
 [2026-03-24 12:44:42.000] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 13:24:46.785] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 13:24:52.013] ButtonChoisirPlacer_Click: joueur=Joueur A
+[2026-03-24 13:24:54.257] BtnGrille_Click: placement par Joueur A en (5,8)
+[2026-03-24 13:24:54.271] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 13:24:58.342] ButtonChoisirPlacer_Click: joueur=Joueur B
+[2026-03-24 13:24:59.912] BtnGrille_Click: placement par Joueur B en (4,6)
+[2026-03-24 13:24:59.917] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 13:25:02.074] ButtonChoisirPlacer_Click: joueur=Joueur A
+[2026-03-24 13:25:04.283] BtnGrille_Click: placement par Joueur A en (6,4)
+[2026-03-24 13:25:04.290] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 13:25:06.102] ButtonChoisirPlacer_Click: joueur=Joueur B
+[2026-03-24 13:25:08.265] BtnGrille_Click: placement par Joueur B en (4,9)
+[2026-03-24 13:25:08.272] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 14:37:55.429] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 15:19:22.909] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 15:19:30.693] ButtonChoisirPlacer_Click: joueur=Joueur A
+[2026-03-24 15:19:32.997] BtnGrille_Click: placement par Joueur A en (4,6)
+[2026-03-24 15:19:33.007] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 15:19:36.163] ButtonChoisirPlacer_Click: joueur=Joueur B
+[2026-03-24 15:19:37.690] BtnGrille_Click: placement par Joueur B en (4,10)
+[2026-03-24 15:19:37.698] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 15:19:40.922] ButtonChoisirPlacer_Click: joueur=Joueur A
+[2026-03-24 15:19:43.365] BtnGrille_Click: placement par Joueur A en (6,7)
+[2026-03-24 15:19:43.373] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 15:19:45.941] ButtonChoisirPlacer_Click: joueur=Joueur B
+[2026-03-24 15:19:47.256] BtnGrille_Click: placement par Joueur B en (5,10)
+[2026-03-24 15:19:47.263] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 15:19:50.037] ButtonChoisirPlacer_Click: joueur=Joueur A
+[2026-03-24 15:19:52.367] BtnGrille_Click: placement par Joueur A en (5,6)
+[2026-03-24 15:19:52.374] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 15:19:56.151] ButtonChoisirPlacer_Click: joueur=Joueur B
+[2026-03-24 15:20:00.085] BtnGrille_Click: placement par Joueur B en (6,11)
+[2026-03-24 15:20:00.089] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 15:20:03.701] ButtonChoisirPlacer_Click: joueur=Joueur A
+[2026-03-24 15:20:06.054] BtnGrille_Click: placement par Joueur A en (4,5)
+[2026-03-24 15:20:06.060] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 15:20:08.032] ButtonChoisirPlacer_Click: joueur=Joueur B
+[2026-03-24 15:20:10.071] BtnGrille_Click: placement par Joueur B en (3,9)
+[2026-03-24 15:20:10.076] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 15:20:12.104] ButtonChoisirPlacer_Click: joueur=Joueur A
+[2026-03-24 15:20:15.910] BtnGrille_Click: placement par Joueur A en (3,6)
+[2026-03-24 15:20:15.913] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 15:28:28.896] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 15:28:38.522] ButtonChoisirPlacer_Click: joueur=Joueur A
+[2026-03-24 15:28:40.142] BtnGrille_Click: placement par Joueur A en (6,10)
+[2026-03-24 15:28:40.153] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 15:28:42.431] ButtonChoisirPlacer_Click: joueur=Joueur B
+[2026-03-24 15:28:45.751] BtnGrille_Click: placement par Joueur B en (5,6)
+[2026-03-24 15:28:45.755] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 15:28:47.721] ButtonChoisirPlacer_Click: joueur=Joueur A
+[2026-03-24 15:28:49.881] BtnGrille_Click: placement par Joueur A en (5,10)
+[2026-03-24 15:28:49.888] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 15:28:51.974] ButtonChoisirPlacer_Click: joueur=Joueur B
+[2026-03-24 15:28:54.465] BtnGrille_Click: placement par Joueur B en (6,6)
+[2026-03-24 15:28:54.469] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 15:28:56.131] ButtonChoisirPlacer_Click: joueur=Joueur A
+[2026-03-24 15:29:00.573] ButtonChoisirPlacer_Click: joueur=Joueur A
+[2026-03-24 15:29:04.476] BtnGrille_Click: placement par Joueur A en (7,10)
+[2026-03-24 15:29:04.479] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 15:29:06.153] ButtonChoisirPlacer_Click: joueur=Joueur B
+[2026-03-24 15:29:08.069] BtnGrille_Click: placement par Joueur B en (7,6)
+[2026-03-24 15:29:08.073] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 15:29:10.485] ButtonChoisirPlacer_Click: joueur=Joueur A
+[2026-03-24 15:29:12.104] BtnGrille_Click: placement par Joueur A en (8,10)
+[2026-03-24 15:29:12.108] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 15:29:14.420] ButtonChoisirPlacer_Click: joueur=Joueur B
+[2026-03-24 15:29:16.555] BtnGrille_Click: placement par Joueur B en (4,6)
+[2026-03-24 15:29:16.559] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 15:29:18.389] ButtonChoisirPlacer_Click: joueur=Joueur A
+[2026-03-24 15:29:20.225] BtnGrille_Click: placement par Joueur A en (9,10)
+[2026-03-24 15:29:21.586] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 15:31:19.752] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 15:31:41.653] ButtonChoisirPlacer_Click: joueur=Joueur A
+[2026-03-24 15:31:45.431] BtnGrille_Click: placement par Joueur A en (6,11)
+[2026-03-24 15:31:45.445] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 15:33:27.777] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 15:33:31.620] ButtonChoisirPlacer_Click: joueur=Joueur A
+[2026-03-24 15:33:33.147] BtnGrille_Click: placement par Joueur A en (6,11)
+[2026-03-24 15:33:33.156] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 15:37:58.356] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 15:38:39.922] ButtonChoisirPlacer_Click: joueur=Joueur A
+[2026-03-24 15:38:41.414] BtnGrille_Click: placement par Joueur A en (7,11)
+[2026-03-24 15:38:41.426] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 15:41:08.383] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 15:41:18.769] ButtonChoisirPlacer_Click: joueur=Joueur A
+[2026-03-24 15:41:20.463] BtnGrille_Click: placement par Joueur A en (6,10)
+[2026-03-24 15:41:20.474] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 15:45:07.305] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 15:46:05.218] ButtonChoisirPlacer_Click: joueur=Joueur A
+[2026-03-24 15:46:07.303] BtnGrille_Click: placement par Joueur A en (7,11)
+[2026-03-24 15:46:07.316] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 15:49:18.631] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 15:50:24.114] ButtonChoisirPlacer_Click: joueur=Joueur A
+[2026-03-24 15:50:27.389] BtnGrille_Click: placement par Joueur A en (7,11)
+[2026-03-24 15:50:27.401] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 15:52:38.150] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 15:52:59.577] ButtonChoisirPlacer_Click: joueur=Joueur A
+[2026-03-24 15:53:01.578] BtnGrille_Click: placement par Joueur A en (6,9)
+[2026-03-24 15:53:01.589] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 15:54:19.056] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 15:54:24.152] ButtonChoisirPlacer_Click: joueur=Joueur A
+[2026-03-24 15:54:29.282] BtnGrille_Click: placement par Joueur A en (7,10)
+[2026-03-24 15:54:29.297] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 15:58:43.160] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 15:58:46.926] ButtonChoisirPlacer_Click: joueur=Joueur A
+[2026-03-24 15:58:49.611] BtnGrille_Click: placement par Joueur A en (6,10)
+[2026-03-24 15:58:49.619] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 16:05:41.788] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 16:05:47.028] ButtonChoisirPlacer_Click: joueur=Joueur A
+[2026-03-24 16:05:48.944] BtnGrille_Click: placement par Joueur A en (6,11)
+[2026-03-24 16:05:48.952] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 16:12:13.212] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 16:13:18.323] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 16:13:25.191] ButtonChoisirPlacer_Click: joueur=Joueur A
+[2026-03-24 16:13:27.860] BtnGrille_Click: placement par Joueur A en (2,1)
+[2026-03-24 16:13:27.868] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 16:15:51.043] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 16:16:30.988] ButtonChoisirPlacer_Click: joueur=Joueur A
+[2026-03-24 16:16:33.137] BtnGrille_Click: placement par Joueur A en (6,9)
+[2026-03-24 16:16:33.151] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 16:17:12.412] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 16:17:29.535] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 16:17:42.966] ButtonChoisirPlacer_Click: joueur=Joueur A
+[2026-03-24 16:17:44.856] BtnGrille_Click: placement par Joueur A en (5,10)
+[2026-03-24 16:17:44.871] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 16:17:46.562] ButtonChoisirPlacer_Click: joueur=Joueur B
+[2026-03-24 16:17:50.434] BtnGrille_Click: placement par Joueur B en (1,0)
+[2026-03-24 16:17:50.439] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 16:17:55.313] ButtonChoisirPlacer_Click: joueur=Joueur A
+[2026-03-24 16:17:56.196] ButtonChoisirPlacer_Click: joueur=Joueur A
+[2026-03-24 16:18:10.966] ButtonChoisirPlacer_Click: joueur=Joueur A
+[2026-03-24 16:18:11.709] ButtonChoisirPlacer_Click: joueur=Joueur A
+[2026-03-24 16:18:11.926] ButtonChoisirPlacer_Click: joueur=Joueur A
+[2026-03-24 16:18:22.940] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 16:18:36.600] ButtonChoisirPlacer_Click: joueur=Joueur A
+[2026-03-24 16:18:39.090] BtnGrille_Click: placement par Joueur A en (5,8)
+[2026-03-24 16:18:39.097] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 16:18:42.094] ButtonChoisirPlacer_Click: joueur=Joueur B
+[2026-03-24 16:18:44.249] BtnGrille_Click: placement par Joueur B en (4,6)
+[2026-03-24 16:18:44.255] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 16:18:46.296] ButtonChoisirPlacer_Click: joueur=Joueur A
+[2026-03-24 16:18:49.940] BtnGrille_Click: placement par Joueur A en (5,9)
+[2026-03-24 16:18:49.948] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 16:18:51.932] ButtonChoisirPlacer_Click: joueur=Joueur B
+[2026-03-24 16:18:55.485] BtnGrille_Click: placement par Joueur B en (4,7)
+[2026-03-24 16:18:55.492] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 16:18:57.555] ButtonChoisirPlacer_Click: joueur=Joueur A
+[2026-03-24 16:18:59.678] BtnGrille_Click: placement par Joueur A en (5,7)
+[2026-03-24 16:18:59.684] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 16:19:02.206] ButtonChoisirPlacer_Click: joueur=Joueur B
+[2026-03-24 16:19:04.154] BtnGrille_Click: placement par Joueur B en (4,8)
+[2026-03-24 16:19:04.161] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 16:19:06.046] ButtonChoisirPlacer_Click: joueur=Joueur A
+[2026-03-24 16:19:08.852] BtnGrille_Click: placement par Joueur A en (5,10)
+[2026-03-24 16:19:08.857] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 16:19:10.877] ButtonChoisirPlacer_Click: joueur=Joueur B
+[2026-03-24 16:19:12.206] BtnGrille_Click: placement par Joueur B en (4,9)
+[2026-03-24 16:19:12.210] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 16:19:14.440] ButtonChoisirPlacer_Click: joueur=Joueur A
+[2026-03-24 16:19:17.886] BtnGrille_Click: placement par Joueur A en (5,5)
+[2026-03-24 16:19:17.890] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 16:19:20.142] ButtonChoisirPlacer_Click: joueur=Joueur B
+[2026-03-24 16:19:21.587] BtnGrille_Click: placement par Joueur B en (4,10)
+[2026-03-24 16:19:23.432] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 16:19:25.010] ButtonChoisirPlacer_Click: joueur=Joueur A
+[2026-03-24 16:19:27.353] BtnGrille_Click: placement par Joueur A en (3,8)
+[2026-03-24 16:19:27.363] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 16:19:29.049] ButtonChoisirPlacer_Click: joueur=Joueur B
+[2026-03-24 16:19:35.564] BtnGrille_Click: placement par Joueur B en (4,11)
+[2026-03-24 16:19:35.572] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 16:19:37.951] ButtonChoisirPlacer_Click: joueur=Joueur A
+[2026-03-24 16:19:40.670] BtnGrille_Click: placement par Joueur A en (6,8)
+[2026-03-24 16:19:40.677] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 16:19:42.564] ButtonChoisirPlacer_Click: joueur=Joueur B
+[2026-03-24 16:19:44.958] BtnGrille_Click: placement par Joueur B en (2,8)
+[2026-03-24 16:19:44.964] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 16:19:50.527] ButtonChoisirPlacer_Click: joueur=Joueur A
+[2026-03-24 16:19:52.152] BtnGrille_Click: placement par Joueur A en (7,8)
+[2026-03-24 16:19:52.159] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 16:19:54.869] ButtonChoisirPlacer_Click: joueur=Joueur B
+[2026-03-24 16:20:00.109] BtnGrille_Click: placement par Joueur B en (4,5)
+[2026-03-24 16:20:00.114] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 16:20:02.168] ButtonChoisirPlacer_Click: joueur=Joueur A
+[2026-03-24 16:20:05.555] BtnGrille_Click: placement par Joueur A en (8,8)
+[2026-03-24 16:20:05.561] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 16:20:13.793] ButtonChoisirPlacer_Click: joueur=Joueur B
+[2026-03-24 16:20:16.944] BtnGrille_Click: placement par Joueur B en (4,4)
+[2026-03-24 16:20:16.952] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 16:20:19.557] ButtonChoisirPlacer_Click: joueur=Joueur A
+[2026-03-24 16:20:21.681] BtnGrille_Click: placement par Joueur A en (9,8)
+[2026-03-24 16:20:23.040] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 16:20:25.499] ButtonChoisirPlacer_Click: joueur=Joueur B
+[2026-03-24 16:20:27.775] BtnGrille_Click: placement par Joueur B en (4,3)
+[2026-03-24 16:20:27.781] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 16:20:30.040] ButtonChoisirPlacer_Click: joueur=Joueur A
+[2026-03-24 16:20:33.024] BtnGrille_Click: placement par Joueur A en (7,9)
+[2026-03-24 16:20:33.031] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 16:20:35.066] ButtonChoisirPlacer_Click: joueur=Joueur B
+[2026-03-24 16:20:37.254] BtnGrille_Click: placement par Joueur B en (4,2)
+[2026-03-24 16:20:39.248] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 16:52:12.418] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 16:52:41.611] ButtonChoisirPlacer_Click: joueur=Joueur A
+[2026-03-24 16:52:56.893] BtnGrille_Click: placement par Joueur A en (6,11)
+[2026-03-24 16:52:56.902] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 16:53:01.094] ButtonChoisirPlacer_Click: joueur=Joueur B
+[2026-03-24 16:53:06.201] BtnGrille_Click: placement par Joueur B en (0,1)
+[2026-03-24 16:53:06.207] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 16:53:12.355] ButtonChoisirTirer_Click: joueur=Joueur A
+[2026-03-24 16:53:15.073] ButtonTirer_Click: début - tireur=Joueur A, puissance=1
+[2026-03-24 16:53:15.305] ButtonTirer_Click: tir EFFECTIF par Joueur A sur (0,1)
+[2026-03-24 16:53:15.310] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 16:53:47.479] ButtonChoisirPlacer_Click: joueur=Joueur B
+[2026-03-24 16:53:53.540] BtnGrille_Click: placement par Joueur B en (0,0)
+[2026-03-24 16:53:53.547] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 16:53:59.685] ButtonChoisirTirer_Click: joueur=Joueur A
+[2026-03-24 16:54:03.524] ButtonTirer_Click: début - tireur=Joueur A, puissance=1
+[2026-03-24 16:54:03.749] ButtonTirer_Click: tir SANS EFFET par Joueur A sur (0,1)
+[2026-03-24 16:54:07.482] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 16:57:32.078] ButtonChoisirTirer_Click: joueur=Joueur B
+[2026-03-24 16:57:39.545] ButtonTirer_Click: début - tireur=Joueur B, puissance=1
+[2026-03-24 16:57:39.769] ButtonTirer_Click: tir SANS EFFET par Joueur B sur (0,10)
+[2026-03-24 16:57:41.635] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 16:57:51.546] ButtonChoisirTirer_Click: joueur=Joueur A
+[2026-03-24 18:06:48.673] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 18:07:11.209] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 18:07:28.892] ButtonChoisirPlacer_Click: joueur=Joueur A
+[2026-03-24 18:07:34.442] BtnGrille_Click: placement par Joueur A en (0,0)
+[2026-03-24 18:07:34.455] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 18:07:38.839] ButtonChoisirTirer_Click: joueur=Joueur B
+[2026-03-24 18:07:45.951] ButtonTirer_Click: début - tireur=Joueur B, puissance=9
+[2026-03-24 18:07:45.965] AnimerTir: indices hors bornes (0,-1) taille=12
+[2026-03-24 18:07:45.968] ButtonTirer_Click: tir EFFECTIF par Joueur B sur (0,-1)
+[2026-03-24 18:07:45.976] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 18:07:54.310] ButtonChoisirPlacer_Click: joueur=Joueur A
+[2026-03-24 18:07:56.705] BtnGrille_Click: placement par Joueur A en (0,12)
+[2026-03-24 18:07:56.711] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 18:07:59.239] ButtonChoisirTirer_Click: joueur=Joueur B
+[2026-03-24 18:08:01.790] ButtonTirer_Click: début - tireur=Joueur B, puissance=1
+[2026-03-24 18:08:02.022] ButtonTirer_Click: tir SANS EFFET par Joueur B sur (0,10)
+[2026-03-24 18:08:06.721] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 18:08:09.639] ButtonChoisirTirer_Click: joueur=Joueur A
+[2026-03-24 18:08:10.525] ButtonTirer_Click: début - tireur=Joueur A, puissance=1
+[2026-03-24 18:08:10.753] ButtonTirer_Click: tir SANS EFFET par Joueur A sur (0,1)
+[2026-03-24 18:08:13.033] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 18:08:16.558] ButtonChoisirTirer_Click: joueur=Joueur B
+[2026-03-24 18:08:19.325] ButtonTirer_Click: début - tireur=Joueur B, puissance=1
+[2026-03-24 18:08:19.546] ButtonTirer_Click: tir SANS EFFET par Joueur B sur (0,10)
+[2026-03-24 18:08:25.468] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 18:08:35.203] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 18:09:00.663] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 18:10:12.132] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 18:10:15.230] ButtonChoisirTirer_Click: joueur=Joueur A
+[2026-03-24 18:10:26.604] ButtonTirer_Click: début - tireur=Joueur A, puissance=1
+[2026-03-24 18:10:26.826] ButtonTirer_Click: tir SANS EFFET par Joueur A sur (0,1)
+[2026-03-24 18:10:28.675] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 18:10:33.195] ButtonChoisirTirer_Click: joueur=Joueur B
+[2026-03-24 18:10:34.145] ButtonTirer_Click: début - tireur=Joueur B, puissance=1
+[2026-03-24 18:10:34.371] ButtonTirer_Click: tir SANS EFFET par Joueur B sur (0,10)
+[2026-03-24 18:10:36.703] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 18:11:34.490] ButtonChoisirTirer_Click: joueur=Joueur A
+[2026-03-24 18:11:35.463] ButtonTirer_Click: début - tireur=Joueur A, puissance=1
+[2026-03-24 18:11:35.680] ButtonTirer_Click: tir SANS EFFET par Joueur A sur (0,1)
+[2026-03-24 18:11:37.557] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 18:11:39.866] ButtonChoisirTirer_Click: joueur=Joueur B
+[2026-03-24 18:11:40.844] ButtonTirer_Click: début - tireur=Joueur B, puissance=1
+[2026-03-24 18:11:41.080] ButtonTirer_Click: tir SANS EFFET par Joueur B sur (0,10)
+[2026-03-24 18:11:43.407] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 18:11:47.051] ButtonChoisirTirer_Click: joueur=Joueur A
+[2026-03-24 18:11:49.466] ButtonTirer_Click: début - tireur=Joueur A, puissance=9
+[2026-03-24 18:11:49.677] ButtonTirer_Click: tir SANS EFFET par Joueur A sur (0,12)
+[2026-03-24 18:11:51.528] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 18:11:52.879] ButtonChoisirTirer_Click: joueur=Joueur B
+[2026-03-24 18:11:54.417] ButtonTirer_Click: début - tireur=Joueur B, puissance=9
+[2026-03-24 18:11:54.427] AnimerTir: indices hors bornes (0,-1) taille=12
+[2026-03-24 18:11:54.428] ButtonTirer_Click: tir SANS EFFET par Joueur B sur (0,-1)
+[2026-03-24 18:11:56.970] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 18:11:58.434] ButtonChoisirTirer_Click: joueur=Joueur A
+[2026-03-24 18:12:00.753] ButtonTirer_Click: début - tireur=Joueur A, puissance=9
+[2026-03-24 18:12:00.971] ButtonTirer_Click: tir SANS EFFET par Joueur A sur (0,12)
+[2026-03-24 18:12:02.894] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 18:12:04.446] ButtonChoisirTirer_Click: joueur=Joueur B
+[2026-03-24 18:12:06.113] ButtonTirer_Click: début - tireur=Joueur B, puissance=9
+[2026-03-24 18:12:06.119] AnimerTir: indices hors bornes (0,-1) taille=12
+[2026-03-24 18:12:06.121] ButtonTirer_Click: tir SANS EFFET par Joueur B sur (0,-1)
+[2026-03-24 18:12:09.044] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 18:12:10.305] ButtonChoisirTirer_Click: joueur=Joueur A
+[2026-03-24 18:12:12.269] ButtonTirer_Click: début - tireur=Joueur A, puissance=9
+[2026-03-24 18:12:12.479] ButtonTirer_Click: tir SANS EFFET par Joueur A sur (0,12)
+[2026-03-24 18:12:14.281] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 18:12:16.281] ButtonChoisirTirer_Click: joueur=Joueur B
+[2026-03-24 18:12:17.997] ButtonTirer_Click: début - tireur=Joueur B, puissance=9
+[2026-03-24 18:12:18.003] AnimerTir: indices hors bornes (0,-1) taille=12
+[2026-03-24 18:12:18.004] ButtonTirer_Click: tir SANS EFFET par Joueur B sur (0,-1)
+[2026-03-24 18:12:21.991] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 18:12:23.576] ButtonChoisirTirer_Click: joueur=Joueur A
+[2026-03-24 18:12:24.760] ButtonTirer_Click: début - tireur=Joueur A, puissance=9
+[2026-03-24 18:12:24.987] ButtonTirer_Click: tir SANS EFFET par Joueur A sur (0,12)
+[2026-03-24 18:12:26.803] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 18:12:28.233] ButtonChoisirTirer_Click: joueur=Joueur B
+[2026-03-24 18:12:29.208] ButtonTirer_Click: début - tireur=Joueur B, puissance=9
+[2026-03-24 18:12:29.215] AnimerTir: indices hors bornes (0,-1) taille=12
+[2026-03-24 18:12:29.216] ButtonTirer_Click: tir SANS EFFET par Joueur B sur (0,-1)
+[2026-03-24 18:12:31.314] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 18:12:35.294] ButtonChoisirTirer_Click: joueur=Joueur A
+[2026-03-24 18:12:36.691] ButtonTirer_Click: début - tireur=Joueur A, puissance=9
+[2026-03-24 18:12:36.909] ButtonTirer_Click: tir SANS EFFET par Joueur A sur (0,12)
+[2026-03-24 18:12:39.085] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 18:12:41.550] ButtonChoisirTirer_Click: joueur=Joueur B
+[2026-03-24 18:12:42.732] ButtonTirer_Click: début - tireur=Joueur B, puissance=9
+[2026-03-24 18:12:42.738] AnimerTir: indices hors bornes (0,-1) taille=12
+[2026-03-24 18:12:42.740] ButtonTirer_Click: tir SANS EFFET par Joueur B sur (0,-1)
+[2026-03-24 18:12:48.723] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 18:12:55.111] ButtonChoisirTirer_Click: joueur=Joueur A
+[2026-03-24 18:12:57.275] ButtonTirer_Click: début - tireur=Joueur A, puissance=9
+[2026-03-24 18:12:57.516] ButtonTirer_Click: tir SANS EFFET par Joueur A sur (0,12)
+[2026-03-24 18:12:59.203] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 18:13:00.365] ButtonChoisirTirer_Click: joueur=Joueur B
+[2026-03-24 18:13:01.237] ButtonTirer_Click: début - tireur=Joueur B, puissance=9
+[2026-03-24 18:13:01.243] AnimerTir: indices hors bornes (0,-1) taille=12
+[2026-03-24 18:13:01.244] ButtonTirer_Click: tir SANS EFFET par Joueur B sur (0,-1)
+[2026-03-24 18:13:04.486] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 18:39:06.315] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 18:39:27.007] ButtonChoisirTirer_Click: joueur=Joueur A
+[2026-03-24 18:39:29.291] ButtonTirer_Click: début - tireur=Joueur A, puissance=1
+[2026-03-24 18:39:29.524] ButtonTirer_Click: tir SANS EFFET par Joueur A sur (0,1)
+[2026-03-24 18:39:32.369] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 18:39:35.863] ButtonChoisirTirer_Click: joueur=Joueur B
+[2026-03-24 18:39:36.901] ButtonTirer_Click: début - tireur=Joueur B, puissance=1
+[2026-03-24 18:39:37.112] ButtonTirer_Click: tir SANS EFFET par Joueur B sur (0,10)
+[2026-03-24 18:39:39.369] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 18:44:30.336] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 18:44:43.847] ButtonChoisirTirer_Click: joueur=Joueur A
+[2026-03-24 18:44:45.245] ButtonTirer_Click: début - tireur=Joueur A, puissance=9
+[2026-03-24 18:44:45.460] ButtonTirer_Click: tir SANS EFFET par Joueur A sur (0,12)
+[2026-03-24 18:44:49.733] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 18:44:52.080] ButtonChoisirTirer_Click: joueur=Joueur B
+[2026-03-24 18:44:53.680] ButtonTirer_Click: début - tireur=Joueur B, puissance=9
+[2026-03-24 18:44:53.690] AnimerTir: indices hors bornes (0,-1) taille=12
+[2026-03-24 18:44:53.691] ButtonTirer_Click: tir SANS EFFET par Joueur B sur (0,-1)
+[2026-03-24 18:44:56.402] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 18:44:58.206] ButtonChoisirTirer_Click: joueur=Joueur A
+[2026-03-24 18:44:59.625] ButtonTirer_Click: début - tireur=Joueur A, puissance=9
+[2026-03-24 18:44:59.857] ButtonTirer_Click: tir SANS EFFET par Joueur A sur (0,12)
+[2026-03-24 18:45:01.550] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 18:45:06.992] ButtonChoisirTirer_Click: joueur=Joueur B
+[2026-03-24 18:45:08.010] ButtonTirer_Click: début - tireur=Joueur B, puissance=9
+[2026-03-24 18:45:08.018] AnimerTir: indices hors bornes (0,-1) taille=12
+[2026-03-24 18:45:08.020] ButtonTirer_Click: tir SANS EFFET par Joueur B sur (0,-1)
+[2026-03-24 18:45:10.417] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 18:45:13.183] ButtonChoisirTirer_Click: joueur=Joueur A
+[2026-03-24 18:45:14.686] ButtonTirer_Click: début - tireur=Joueur A, puissance=9
+[2026-03-24 18:45:14.907] ButtonTirer_Click: tir SANS EFFET par Joueur A sur (0,12)
+[2026-03-24 18:45:16.734] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 18:45:18.297] ButtonChoisirTirer_Click: joueur=Joueur B
+[2026-03-24 18:45:20.199] ButtonTirer_Click: début - tireur=Joueur B, puissance=9
+[2026-03-24 18:45:20.207] AnimerTir: indices hors bornes (0,-1) taille=12
+[2026-03-24 18:45:20.208] ButtonTirer_Click: tir SANS EFFET par Joueur B sur (0,-1)
+[2026-03-24 18:45:25.125] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 18:48:39.853] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 18:48:56.268] ButtonChoisirTirer_Click: joueur=Joueur A
+[2026-03-24 18:48:58.138] ButtonTirer_Click: début - tireur=Joueur A, puissance=9
+[2026-03-24 18:48:58.358] ButtonTirer_Click: tir SANS EFFET par Joueur A sur (0,12)
+[2026-03-24 18:49:00.212] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 18:49:04.303] ButtonChoisirTirer_Click: joueur=Joueur B
+[2026-03-24 18:49:05.650] ButtonTirer_Click: début - tireur=Joueur B, puissance=9
+[2026-03-24 18:49:05.664] AnimerTir: indices hors bornes (0,-1) taille=12
+[2026-03-24 18:49:05.665] ButtonTirer_Click: tir SANS EFFET par Joueur B sur (0,-1)
+[2026-03-24 18:49:09.246] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 18:49:11.297] ButtonChoisirTirer_Click: joueur=Joueur A
+[2026-03-24 18:49:12.505] ButtonTirer_Click: début - tireur=Joueur A, puissance=9
+[2026-03-24 18:49:12.720] ButtonTirer_Click: tir SANS EFFET par Joueur A sur (0,12)
+[2026-03-24 18:49:14.604] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 18:49:15.981] ButtonChoisirTirer_Click: joueur=Joueur B
+[2026-03-24 18:49:17.120] ButtonTirer_Click: début - tireur=Joueur B, puissance=9
+[2026-03-24 18:49:17.129] AnimerTir: indices hors bornes (0,-1) taille=12
+[2026-03-24 18:49:17.130] ButtonTirer_Click: tir SANS EFFET par Joueur B sur (0,-1)
+[2026-03-24 18:49:18.951] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 18:50:36.519] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 18:50:39.851] ButtonChoisirTirer_Click: joueur=Joueur A
+[2026-03-24 18:50:45.030] ButtonTirer_Click: début - tireur=Joueur A, puissance=9
+[2026-03-24 18:50:45.261] ButtonTirer_Click: tir SANS EFFET par Joueur A sur (0,11)
+[2026-03-24 18:50:47.056] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 18:50:50.571] ButtonChoisirTirer_Click: joueur=Joueur B
+[2026-03-24 18:50:51.354] ButtonTirer_Click: début - tireur=Joueur B, puissance=9
+[2026-03-24 18:50:51.567] ButtonTirer_Click: tir SANS EFFET par Joueur B sur (0,0)
+[2026-03-24 18:50:53.336] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 18:50:54.646] ButtonChoisirTirer_Click: joueur=Joueur A
+[2026-03-24 18:50:55.531] ButtonTirer_Click: début - tireur=Joueur A, puissance=9
+[2026-03-24 18:50:55.749] ButtonTirer_Click: tir SANS EFFET par Joueur A sur (0,11)
+[2026-03-24 18:50:57.318] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 18:51:18.926] ButtonChoisirPlacer_Click: joueur=Joueur B
+[2026-03-24 18:51:21.272] BtnGrille_Click: placement par Joueur B en (0,12)
+[2026-03-24 18:51:21.284] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 18:52:33.872] ButtonChoisirTirer_Click: joueur=Joueur A
+[2026-03-24 18:52:34.428] ButtonTirer_Click: début - tireur=Joueur A, puissance=1
+[2026-03-24 18:52:34.640] ButtonTirer_Click: tir SANS EFFET par Joueur A sur (0,1)
+[2026-03-24 18:52:37.162] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 18:52:38.537] ButtonChoisirTirer_Click: joueur=Joueur B
+[2026-03-24 18:52:39.456] ButtonTirer_Click: début - tireur=Joueur B, puissance=1
+[2026-03-24 18:52:39.668] ButtonTirer_Click: tir SANS EFFET par Joueur B sur (0,10)
+[2026-03-24 18:52:41.369] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 18:55:04.710] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 18:55:13.511] ButtonChoisirTirer_Click: joueur=Joueur A
+[2026-03-24 18:55:14.648] ButtonTirer_Click: début - tireur=Joueur A, puissance=9
+[2026-03-24 18:55:14.869] ButtonTirer_Click: tir SANS EFFET par Joueur A sur (0,11)
+[2026-03-24 18:55:16.622] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 18:55:20.039] ButtonChoisirTirer_Click: joueur=Joueur B
+[2026-03-24 18:55:21.063] ButtonTirer_Click: début - tireur=Joueur B, puissance=9
+[2026-03-24 18:55:21.281] ButtonTirer_Click: tir SANS EFFET par Joueur B sur (0,0)
+[2026-03-24 18:56:39.213] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 19:00:28.216] ButtonChoisirPlacer_Click: joueur=Joueur A
+[2026-03-24 19:00:32.004] BtnGrille_Click: placement par Joueur A en (0,0)
+[2026-03-24 19:00:32.019] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 19:00:34.321] ButtonChoisirPlacer_Click: joueur=Joueur B
+[2026-03-24 19:00:37.051] BtnGrille_Click: placement par Joueur B en (0,12)
+[2026-03-24 19:00:37.057] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 19:05:51.265] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 19:05:56.618] ButtonChoisirTirer_Click: joueur=Joueur A
+[2026-03-24 19:05:57.924] ButtonTirer_Click: début - tireur=Joueur A, puissance=9
+[2026-03-24 19:05:58.159] ButtonTirer_Click: tir SANS EFFET par Joueur A sur (0,11)
+[2026-03-24 19:05:59.934] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 19:06:03.754] ButtonChoisirTirer_Click: joueur=Joueur B
+[2026-03-24 19:06:05.079] ButtonTirer_Click: début - tireur=Joueur B, puissance=9
+[2026-03-24 19:06:05.299] ButtonTirer_Click: tir SANS EFFET par Joueur B sur (0,0)
+[2026-03-24 19:06:07.720] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 19:06:09.594] ButtonChoisirTirer_Click: joueur=Joueur A
+[2026-03-24 19:06:10.377] ButtonTirer_Click: début - tireur=Joueur A, puissance=9
+[2026-03-24 19:06:10.608] ButtonTirer_Click: tir SANS EFFET par Joueur A sur (0,11)
+[2026-03-24 19:06:12.374] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 19:06:13.978] ButtonChoisirTirer_Click: joueur=Joueur B
+[2026-03-24 19:06:15.185] ButtonTirer_Click: début - tireur=Joueur B, puissance=9
+[2026-03-24 19:06:15.400] ButtonTirer_Click: tir SANS EFFET par Joueur B sur (0,0)
+[2026-03-24 19:06:17.616] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 19:06:26.580] ButtonChoisirTirer_Click: joueur=Joueur A
+[2026-03-24 19:10:37.733] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 19:10:40.640] ButtonChoisirTirer_Click: joueur=Joueur A
+[2026-03-24 19:10:41.774] ButtonTirer_Click: début - tireur=Joueur A, puissance=9
+[2026-03-24 19:10:42.009] ButtonTirer_Click: tir SANS EFFET par Joueur A sur (0,12)
+[2026-03-24 19:10:44.032] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 19:10:47.644] ButtonChoisirTirer_Click: joueur=Joueur B
+[2026-03-24 19:10:49.029] ButtonTirer_Click: début - tireur=Joueur B, puissance=9
+[2026-03-24 19:10:49.037] AnimerTir: indices hors bornes (0,-1) taille=12
+[2026-03-24 19:10:49.038] ButtonTirer_Click: tir SANS EFFET par Joueur B sur (0,-1)
+[2026-03-24 19:10:51.211] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 19:10:52.485] ButtonChoisirTirer_Click: joueur=Joueur A
+[2026-03-24 19:10:53.936] ButtonTirer_Click: début - tireur=Joueur A, puissance=9
+[2026-03-24 19:10:54.155] ButtonTirer_Click: tir SANS EFFET par Joueur A sur (0,12)
+[2026-03-24 19:10:55.914] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 19:10:59.313] ButtonChoisirTirer_Click: joueur=Joueur B
+[2026-03-24 19:11:00.278] ButtonTirer_Click: début - tireur=Joueur B, puissance=9
+[2026-03-24 19:11:00.287] AnimerTir: indices hors bornes (0,-1) taille=12
+[2026-03-24 19:11:00.288] ButtonTirer_Click: tir SANS EFFET par Joueur B sur (0,-1)
+[2026-03-24 19:11:02.484] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 19:19:33.701] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 19:19:39.121] ButtonChoisirTirer_Click: joueur=Joueur A
+[2026-03-24 19:19:40.126] ButtonTirer_Click: début - tireur=Joueur A, puissance=9
+[2026-03-24 19:19:40.355] ButtonTirer_Click: tir SANS EFFET par Joueur A sur (0,12)
+[2026-03-24 19:19:42.570] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 19:19:43.649] ButtonChoisirTirer_Click: joueur=Joueur B
+[2026-03-24 19:19:45.330] ButtonTirer_Click: début - tireur=Joueur B, puissance=9
+[2026-03-24 19:19:45.341] AnimerTir: indices hors bornes (0,-1) taille=12
+[2026-03-24 19:19:45.343] ButtonTirer_Click: tir SANS EFFET par Joueur B sur (0,-1)
+[2026-03-24 19:19:47.656] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 19:19:49.305] ButtonChoisirTirer_Click: joueur=Joueur A
+[2026-03-24 19:19:50.319] ButtonTirer_Click: début - tireur=Joueur A, puissance=9
+[2026-03-24 19:19:50.547] ButtonTirer_Click: tir SANS EFFET par Joueur A sur (0,12)
+[2026-03-24 19:19:54.464] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 19:19:56.173] ButtonChoisirTirer_Click: joueur=Joueur B
+[2026-03-24 19:19:57.688] ButtonTirer_Click: début - tireur=Joueur B, puissance=9
+[2026-03-24 19:19:57.697] AnimerTir: indices hors bornes (0,-1) taille=12
+[2026-03-24 19:19:57.698] ButtonTirer_Click: tir SANS EFFET par Joueur B sur (0,-1)
+[2026-03-24 19:20:22.406] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 19:20:34.252] ButtonChoisirPlacer_Click: joueur=Joueur A
+[2026-03-24 19:20:38.551] BtnGrille_Click: placement par Joueur A en (0,12)
+[2026-03-24 19:20:38.566] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 19:20:44.172] ButtonChoisirPlacer_Click: joueur=Joueur B
+[2026-03-24 19:20:51.499] BtnGrille_Click: placement par Joueur B en (0,0)
+[2026-03-24 19:20:51.505] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 19:20:54.520] ButtonChoisirTirer_Click: joueur=Joueur A
+[2026-03-24 19:20:57.197] ButtonTirer_Click: début - tireur=Joueur A, puissance=9
+[2026-03-24 19:20:57.424] ButtonTirer_Click: tir SANS EFFET par Joueur A sur (0,12)
+[2026-03-24 19:21:00.039] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 19:21:03.257] ButtonChoisirTirer_Click: joueur=Joueur B
+[2026-03-24 19:21:04.468] ButtonTirer_Click: début - tireur=Joueur B, puissance=9
+[2026-03-24 19:21:04.478] AnimerTir: indices hors bornes (0,-1) taille=12
+[2026-03-24 19:21:04.479] ButtonTirer_Click: tir SANS EFFET par Joueur B sur (0,-1)
+[2026-03-24 19:21:07.067] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 19:21:10.222] ButtonChoisirTirer_Click: joueur=Joueur A
+[2026-03-24 19:21:11.327] ButtonTirer_Click: début - tireur=Joueur A, puissance=9
+[2026-03-24 19:21:11.547] ButtonTirer_Click: tir SANS EFFET par Joueur A sur (0,12)
+[2026-03-24 19:21:14.133] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 19:21:36.049] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 19:21:39.176] ButtonChoisirPlacer_Click: joueur=Joueur A
+[2026-03-24 19:21:51.022] BtnGrille_Click: placement par Joueur A en (0,12)
+[2026-03-24 19:21:51.038] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 19:22:10.490] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 19:22:49.285] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 19:22:53.400] ButtonChoisirTirer_Click: joueur=Joueur A
+[2026-03-24 19:22:54.252] ButtonTirer_Click: début - tireur=Joueur A, puissance=9
+[2026-03-24 19:22:54.485] ButtonTirer_Click: tir SANS EFFET par Joueur A sur (0,12)
+[2026-03-24 19:22:56.086] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 19:22:59.931] ButtonChoisirTirer_Click: joueur=Joueur B
+[2026-03-24 19:23:01.010] ButtonTirer_Click: début - tireur=Joueur B, puissance=9
+[2026-03-24 19:23:01.021] AnimerTir: indices hors bornes (0,-1) taille=12
+[2026-03-24 19:23:01.022] ButtonTirer_Click: tir SANS EFFET par Joueur B sur (0,-1)
+[2026-03-24 19:23:02.952] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 19:23:06.193] ButtonChoisirPlacer_Click: joueur=Joueur A
+[2026-03-24 19:23:11.854] BtnGrille_Click: placement par Joueur A en (0,0)
+[2026-03-24 19:23:11.868] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 19:23:14.632] ButtonChoisirPlacer_Click: joueur=Joueur B
+[2026-03-24 19:23:16.859] BtnGrille_Click: placement par Joueur B en (0,12)
+[2026-03-24 19:23:16.864] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 19:23:18.780] ButtonChoisirTirer_Click: joueur=Joueur A
+[2026-03-24 19:23:19.631] ButtonTirer_Click: début - tireur=Joueur A, puissance=9
+[2026-03-24 19:23:19.859] ButtonTirer_Click: tir EFFECTIF par Joueur A sur (0,12)
+[2026-03-24 19:23:19.866] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 19:23:21.567] ButtonChoisirTirer_Click: joueur=Joueur B
+[2026-03-24 19:23:22.540] ButtonTirer_Click: début - tireur=Joueur B, puissance=9
+[2026-03-24 19:23:22.546] AnimerTir: indices hors bornes (0,-1) taille=12
+[2026-03-24 19:23:22.547] ButtonTirer_Click: tir EFFECTIF par Joueur B sur (0,-1)
+[2026-03-24 19:23:22.552] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 19:23:35.300] ButtonChoisirTirer_Click: joueur=Joueur A
+[2026-03-24 19:23:36.377] ButtonTirer_Click: début - tireur=Joueur A, puissance=1
+[2026-03-24 19:23:36.591] ButtonTirer_Click: tir SANS EFFET par Joueur A sur (0,1)
+[2026-03-24 19:23:39.089] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 19:23:40.687] ButtonChoisirTirer_Click: joueur=Joueur B
+[2026-03-24 19:23:41.546] ButtonTirer_Click: début - tireur=Joueur B, puissance=1
+[2026-03-24 19:23:41.757] ButtonTirer_Click: tir SANS EFFET par Joueur B sur (0,10)
+[2026-03-24 19:23:43.504] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 19:23:45.166] ButtonChoisirTirer_Click: joueur=Joueur A
+[2026-03-24 19:23:46.380] ButtonTirer_Click: début - tireur=Joueur A, puissance=1
+[2026-03-24 19:23:46.591] ButtonTirer_Click: tir SANS EFFET par Joueur A sur (0,1)
+[2026-03-24 19:23:48.449] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 19:23:50.433] ButtonChoisirTirer_Click: joueur=Joueur B
+[2026-03-24 19:23:51.623] ButtonTirer_Click: début - tireur=Joueur B, puissance=1
+[2026-03-24 19:23:51.842] ButtonTirer_Click: tir SANS EFFET par Joueur B sur (0,10)
+[2026-03-24 19:23:55.403] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 19:28:01.344] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 19:28:20.603] ButtonChoisirTirer_Click: joueur=Joueur A
+[2026-03-24 19:28:21.910] ButtonTirer_Click: début - tireur=Joueur A, puissance=9
+[2026-03-24 19:28:22.135] ButtonTirer_Click: tir SANS EFFET par Joueur A sur (0,12)
+[2026-03-24 19:28:23.874] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 19:28:27.160] ButtonChoisirTirer_Click: joueur=Joueur B
+[2026-03-24 19:28:28.733] ButtonTirer_Click: début - tireur=Joueur B, puissance=9
+[2026-03-24 19:28:28.964] ButtonTirer_Click: tir SANS EFFET par Joueur B sur (0,0)
+[2026-03-24 19:28:30.926] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 19:28:33.693] ButtonChoisirTirer_Click: joueur=Joueur A
+[2026-03-24 19:28:34.894] ButtonTirer_Click: début - tireur=Joueur A, puissance=9
+[2026-03-24 19:28:35.107] ButtonTirer_Click: tir SANS EFFET par Joueur A sur (0,12)
+[2026-03-24 19:28:39.225] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 19:28:42.781] ButtonChoisirTirer_Click: joueur=Joueur B
+[2026-03-24 19:28:44.310] ButtonTirer_Click: début - tireur=Joueur B, puissance=9
+[2026-03-24 19:28:44.527] ButtonTirer_Click: tir SANS EFFET par Joueur B sur (0,0)
+[2026-03-24 19:28:46.802] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 19:28:50.837] ButtonChoisirTirer_Click: joueur=Joueur A
+[2026-03-24 19:28:51.943] ButtonTirer_Click: début - tireur=Joueur A, puissance=1
+[2026-03-24 19:28:52.163] ButtonTirer_Click: tir SANS EFFET par Joueur A sur (0,1)
+[2026-03-24 19:28:54.852] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 19:28:56.214] ButtonChoisirTirer_Click: joueur=Joueur B
+[2026-03-24 19:28:57.132] ButtonTirer_Click: début - tireur=Joueur B, puissance=1
+[2026-03-24 19:28:57.363] ButtonTirer_Click: tir SANS EFFET par Joueur B sur (0,11)
+[2026-03-24 19:28:59.142] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 19:29:01.201] ButtonChoisirTirer_Click: joueur=Joueur A
+[2026-03-24 19:29:02.046] ButtonTirer_Click: début - tireur=Joueur A, puissance=1
+[2026-03-24 19:29:02.267] ButtonTirer_Click: tir SANS EFFET par Joueur A sur (0,1)
+[2026-03-24 19:29:03.934] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 19:29:05.994] ButtonChoisirTirer_Click: joueur=Joueur B
+[2026-03-24 19:29:07.388] ButtonTirer_Click: début - tireur=Joueur B, puissance=1
+[2026-03-24 19:29:07.608] ButtonTirer_Click: tir SANS EFFET par Joueur B sur (0,11)
+[2026-03-24 19:29:09.272] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 19:29:10.704] ButtonChoisirTirer_Click: joueur=Joueur A
+[2026-03-24 19:29:12.100] ButtonTirer_Click: début - tireur=Joueur A, puissance=1
+[2026-03-24 19:29:12.320] ButtonTirer_Click: tir SANS EFFET par Joueur A sur (0,1)
+[2026-03-24 19:29:14.138] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 19:29:16.647] ButtonChoisirTirer_Click: joueur=Joueur B
+[2026-03-24 19:29:17.344] ButtonTirer_Click: début - tireur=Joueur B, puissance=1
+[2026-03-24 19:29:17.563] ButtonTirer_Click: tir SANS EFFET par Joueur B sur (0,11)
+[2026-03-24 19:29:19.144] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 19:29:20.944] ButtonChoisirTirer_Click: joueur=Joueur A
+[2026-03-24 19:29:21.725] ButtonTirer_Click: début - tireur=Joueur A, puissance=1
+[2026-03-24 19:29:21.943] ButtonTirer_Click: tir SANS EFFET par Joueur A sur (0,1)
+[2026-03-24 19:37:48.145] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 19:38:56.331] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 19:39:00.616] ButtonChoisirTirer_Click: joueur=Joueur A
+[2026-03-24 19:39:02.305] ButtonTirer_Click: début - tireur=Joueur A, puissance=9
+[2026-03-24 19:39:02.535] ButtonTirer_Click: tir SANS EFFET par Joueur A sur la ligne 0
+[2026-03-24 19:39:04.370] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 19:39:05.872] ButtonChoisirTirer_Click: joueur=Joueur B
+[2026-03-24 19:39:06.918] ButtonTirer_Click: début - tireur=Joueur B, puissance=9
+[2026-03-24 19:39:07.150] ButtonTirer_Click: tir SANS EFFET par Joueur B sur la ligne 0
+[2026-03-24 19:39:09.125] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 19:39:12.945] ButtonChoisirTirer_Click: joueur=Joueur A
+[2026-03-24 19:39:13.985] ButtonTirer_Click: début - tireur=Joueur A, puissance=1
+[2026-03-24 19:39:14.201] ButtonTirer_Click: tir SANS EFFET par Joueur A sur la ligne 0
+[2026-03-24 19:39:16.009] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 19:39:17.804] ButtonChoisirTirer_Click: joueur=Joueur B
+[2026-03-24 19:39:19.255] ButtonTirer_Click: début - tireur=Joueur B, puissance=1
+[2026-03-24 19:39:19.484] ButtonTirer_Click: tir SANS EFFET par Joueur B sur la ligne 0
+[2026-03-24 19:39:21.954] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 19:40:12.604] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 19:43:25.004] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 19:44:33.326] ButtonChoisirTirer_Click: joueur=Joueur A
+[2026-03-24 19:44:34.891] ButtonTirer_Click: début - tireur=Joueur A, puissance=8
+[2026-03-24 19:44:35.111] ButtonTirer_Click: tir SANS EFFET par Joueur A sur la ligne 0
+[2026-03-24 19:44:37.712] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 19:44:40.668] ButtonChoisirTirer_Click: joueur=Joueur B
+[2026-03-24 19:44:41.666] ButtonTirer_Click: début - tireur=Joueur B, puissance=9
+[2026-03-24 19:44:41.890] ButtonTirer_Click: tir SANS EFFET par Joueur B sur la ligne 0
+[2026-03-24 19:44:43.926] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 19:44:47.061] ButtonChoisirTirer_Click: joueur=Joueur A
+[2026-03-24 19:44:48.211] ButtonTirer_Click: début - tireur=Joueur A, puissance=9
+[2026-03-24 19:44:48.427] ButtonTirer_Click: tir SANS EFFET par Joueur A sur la ligne 0
+[2026-03-24 19:44:49.976] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 19:44:51.184] ButtonChoisirTirer_Click: joueur=Joueur B
+[2026-03-24 19:44:52.119] ButtonTirer_Click: début - tireur=Joueur B, puissance=9
+[2026-03-24 19:44:52.347] ButtonTirer_Click: tir SANS EFFET par Joueur B sur la ligne 0
+[2026-03-24 19:44:54.001] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 19:44:55.482] ButtonChoisirTirer_Click: joueur=Joueur A
+[2026-03-24 19:44:56.215] ButtonTirer_Click: début - tireur=Joueur A, puissance=1
+[2026-03-24 19:44:56.434] ButtonTirer_Click: tir SANS EFFET par Joueur A sur la ligne 0
+[2026-03-24 19:44:58.128] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 19:45:00.894] ButtonChoisirTirer_Click: joueur=Joueur B
+[2026-03-24 19:45:01.614] ButtonTirer_Click: début - tireur=Joueur B, puissance=1
+[2026-03-24 19:45:01.835] ButtonTirer_Click: tir SANS EFFET par Joueur B sur la ligne 0
+[2026-03-24 19:45:04.578] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 19:45:14.581] ButtonChoisirTirer_Click: joueur=Joueur A
+[2026-03-24 19:45:16.375] ButtonTirer_Click: début - tireur=Joueur A, puissance=9
+[2026-03-24 19:45:16.602] ButtonTirer_Click: tir SANS EFFET par Joueur A sur la ligne 4
+[2026-03-24 19:45:18.745] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 19:45:20.732] ButtonChoisirTirer_Click: joueur=Joueur B
+[2026-03-24 19:45:22.151] ButtonTirer_Click: début - tireur=Joueur B, puissance=9
+[2026-03-24 19:45:22.374] ButtonTirer_Click: tir SANS EFFET par Joueur B sur la ligne 4
+[2026-03-24 19:45:24.265] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 19:45:26.122] ButtonChoisirTirer_Click: joueur=Joueur A
+[2026-03-24 19:45:27.109] ButtonTirer_Click: début - tireur=Joueur A, puissance=9
+[2026-03-24 19:45:27.327] ButtonTirer_Click: tir SANS EFFET par Joueur A sur la ligne 4
+[2026-03-24 19:45:29.041] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 19:45:30.612] ButtonChoisirTirer_Click: joueur=Joueur B
+[2026-03-24 19:45:32.640] ButtonTirer_Click: début - tireur=Joueur B, puissance=1
+[2026-03-24 19:45:32.869] ButtonTirer_Click: tir SANS EFFET par Joueur B sur la ligne 4
+[2026-03-24 19:45:35.122] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 19:45:36.367] ButtonChoisirTirer_Click: joueur=Joueur A
+[2026-03-24 19:45:39.146] ButtonTirer_Click: début - tireur=Joueur A, puissance=1
+[2026-03-24 19:45:39.368] ButtonTirer_Click: tir SANS EFFET par Joueur A sur la ligne 4
+[2026-03-24 19:45:41.603] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 19:45:43.547] ButtonChoisirTirer_Click: joueur=Joueur B
+[2026-03-24 19:45:45.274] ButtonTirer_Click: début - tireur=Joueur B, puissance=1
+[2026-03-24 19:45:45.490] ButtonTirer_Click: tir SANS EFFET par Joueur B sur la ligne 4
+[2026-03-24 19:45:48.191] DemarrerTour: joueurActuel=Joueur A
+[2026-03-24 19:47:27.828] ButtonChoisirTirer_Click: joueur=Joueur A
+[2026-03-24 19:47:28.982] ButtonTirer_Click: début - tireur=Joueur A, puissance=9
+[2026-03-24 19:47:29.208] ButtonTirer_Click: tir SANS EFFET par Joueur A sur la ligne 4
+[2026-03-24 19:47:30.864] DemarrerTour: joueurActuel=Joueur B
+[2026-03-24 19:47:34.397] ButtonChoisirTirer_Click: joueur=Joueur B
+[2026-03-24 19:47:35.414] ButtonTirer_Click: début - tireur=Joueur B, puissance=9
+[2026-03-24 19:47:35.627] ButtonTirer_Click: tir SANS EFFET par Joueur B sur la ligne 4
+[2026-03-24 19:47:37.281] DemarrerTour: joueurActuel=Joueur A
