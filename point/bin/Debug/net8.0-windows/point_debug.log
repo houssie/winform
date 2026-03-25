@@ -1481,3 +1481,93 @@
 [2026-03-24 19:47:35.414] ButtonTirer_Click: début - tireur=Joueur B, puissance=9
 [2026-03-24 19:47:35.627] ButtonTirer_Click: tir SANS EFFET par Joueur B sur la ligne 4
 [2026-03-24 19:47:37.281] DemarrerTour: joueurActuel=Joueur A
+[2026-03-25 08:00:56.583] DemarrerTour: joueurActuel=Joueur A
+[2026-03-25 08:01:00.806] ButtonChoisirTirer_Click: joueur=Joueur A
+[2026-03-25 08:01:04.159] ButtonTirer_Click: début - tireur=Joueur A, puissance=9
+[2026-03-25 08:01:04.385] ButtonTirer_Click: tir SANS EFFET par Joueur A sur la ligne 0
+[2026-03-25 08:01:06.196] DemarrerTour: joueurActuel=Joueur B
+[2026-03-25 08:01:08.598] ButtonChoisirTirer_Click: joueur=Joueur B
+[2026-03-25 08:01:09.944] ButtonTirer_Click: début - tireur=Joueur B, puissance=9
+[2026-03-25 08:01:10.155] ButtonTirer_Click: tir SANS EFFET par Joueur B sur la ligne 0
+[2026-03-25 08:01:12.589] DemarrerTour: joueurActuel=Joueur A
+[2026-03-25 08:01:17.547] ButtonChoisirPlacer_Click: joueur=Joueur A
+[2026-03-25 08:01:19.566] BtnGrille_Click: placement par Joueur A en (5,11)
+[2026-03-25 08:01:19.579] DemarrerTour: joueurActuel=Joueur B
+[2026-03-25 08:01:21.538] ButtonChoisirPlacer_Click: joueur=Joueur B
+[2026-03-25 08:01:35.055] BtnGrille_Click: placement par Joueur B en (5,9)
+[2026-03-25 08:01:35.060] DemarrerTour: joueurActuel=Joueur A
+[2026-03-25 08:01:44.997] ButtonChoisirPlacer_Click: joueur=Joueur A
+[2026-03-25 08:01:48.171] BtnGrille_Click: placement par Joueur A en (6,11)
+[2026-03-25 08:01:48.178] DemarrerTour: joueurActuel=Joueur B
+[2026-03-25 08:01:50.097] ButtonChoisirPlacer_Click: joueur=Joueur B
+[2026-03-25 08:01:52.356] BtnGrille_Click: placement par Joueur B en (6,9)
+[2026-03-25 08:01:52.362] DemarrerTour: joueurActuel=Joueur A
+[2026-03-25 08:01:55.895] ButtonChoisirPlacer_Click: joueur=Joueur A
+[2026-03-25 08:01:57.672] BtnGrille_Click: placement par Joueur A en (7,11)
+[2026-03-25 08:01:57.680] DemarrerTour: joueurActuel=Joueur B
+[2026-03-25 08:01:59.635] ButtonChoisirPlacer_Click: joueur=Joueur B
+[2026-03-25 08:02:01.770] BtnGrille_Click: placement par Joueur B en (7,9)
+[2026-03-25 08:02:01.777] DemarrerTour: joueurActuel=Joueur A
+[2026-03-25 08:02:03.807] ButtonChoisirPlacer_Click: joueur=Joueur A
+[2026-03-25 08:02:05.512] BtnGrille_Click: placement par Joueur A en (8,11)
+[2026-03-25 08:02:05.516] DemarrerTour: joueurActuel=Joueur B
+[2026-03-25 08:02:07.206] ButtonChoisirPlacer_Click: joueur=Joueur B
+[2026-03-25 08:02:09.142] BtnGrille_Click: placement par Joueur B en (8,9)
+[2026-03-25 08:02:09.149] DemarrerTour: joueurActuel=Joueur A
+[2026-03-25 08:02:12.007] ButtonChoisirPlacer_Click: joueur=Joueur A
+[2026-03-25 08:02:14.645] BtnGrille_Click: placement par Joueur A en (9,11)
+[2026-03-25 08:02:16.225] DemarrerTour: joueurActuel=Joueur B
+[2026-03-25 08:02:19.938] ButtonChoisirPlacer_Click: joueur=Joueur B
+[2026-03-25 08:02:21.834] BtnGrille_Click: placement par Joueur B en (9,9)
+[2026-03-25 08:02:23.294] DemarrerTour: joueurActuel=Joueur A
+[2026-03-25 08:02:25.840] ButtonChoisirPlacer_Click: joueur=Joueur A
+[2026-03-25 08:02:29.909] BtnGrille_Click: placement par Joueur A en (4,11)
+[2026-03-25 08:02:29.917] DemarrerTour: joueurActuel=Joueur B
+[2026-03-25 08:02:32.393] ButtonChoisirPlacer_Click: joueur=Joueur B
+[2026-03-25 08:02:36.588] BtnGrille_Click: placement par Joueur B en (4,9)
+[2026-03-25 08:02:36.592] DemarrerTour: joueurActuel=Joueur A
+[2026-03-25 08:02:39.264] ButtonChoisirPlacer_Click: joueur=Joueur A
+[2026-03-25 08:02:45.335] BtnGrille_Click: placement par Joueur A en (3,11)
+[2026-03-25 08:02:45.339] DemarrerTour: joueurActuel=Joueur B
+[2026-03-25 08:02:47.511] ButtonChoisirPlacer_Click: joueur=Joueur B
+[2026-03-25 08:02:50.066] BtnGrille_Click: placement par Joueur B en (6,8)
+[2026-03-25 08:02:50.069] DemarrerTour: joueurActuel=Joueur A
+[2026-03-25 08:02:52.103] ButtonChoisirPlacer_Click: joueur=Joueur A
+[2026-03-25 08:02:54.810] BtnGrille_Click: placement par Joueur A en (2,11)
+[2026-03-25 08:02:54.814] DemarrerTour: joueurActuel=Joueur B
+[2026-03-25 08:02:57.208] ButtonChoisirPlacer_Click: joueur=Joueur B
+[2026-03-25 08:02:59.871] BtnGrille_Click: placement par Joueur B en (6,10)
+[2026-03-25 08:02:59.876] DemarrerTour: joueurActuel=Joueur A
+[2026-03-25 08:03:02.128] ButtonChoisirPlacer_Click: joueur=Joueur A
+[2026-03-25 08:03:04.253] BtnGrille_Click: placement par Joueur A en (1,11)
+[2026-03-25 08:03:06.113] DemarrerTour: joueurActuel=Joueur B
+[2026-03-25 08:03:08.848] ButtonChoisirPlacer_Click: joueur=Joueur B
+[2026-03-25 08:03:11.769] BtnGrille_Click: placement par Joueur B en (6,7)
+[2026-03-25 08:03:11.773] DemarrerTour: joueurActuel=Joueur A
+[2026-03-25 08:03:13.751] ButtonChoisirPlacer_Click: joueur=Joueur A
+[2026-03-25 08:03:16.957] BtnGrille_Click: placement par Joueur A en (4,12)
+[2026-03-25 08:03:16.961] DemarrerTour: joueurActuel=Joueur B
+[2026-03-25 08:03:19.116] ButtonChoisirPlacer_Click: joueur=Joueur B
+[2026-03-25 08:03:21.817] BtnGrille_Click: placement par Joueur B en (6,6)
+[2026-03-25 08:03:24.079] DemarrerTour: joueurActuel=Joueur A
+[2026-03-25 08:03:34.984] ButtonChoisirPlacer_Click: joueur=Joueur A
+[2026-03-25 08:03:37.613] BtnGrille_Click: placement par Joueur A en (3,10)
+[2026-03-25 08:03:37.618] DemarrerTour: joueurActuel=Joueur B
+[2026-03-25 08:03:40.207] ButtonChoisirPlacer_Click: joueur=Joueur B
+[2026-03-25 08:03:44.248] BtnGrille_Click: placement par Joueur B en (5,8)
+[2026-03-25 08:03:44.253] DemarrerTour: joueurActuel=Joueur A
+[2026-03-25 08:03:47.050] ButtonChoisirPlacer_Click: joueur=Joueur A
+[2026-03-25 08:03:54.838] BtnGrille_Click: placement par Joueur A en (2,9)
+[2026-03-25 08:03:54.845] DemarrerTour: joueurActuel=Joueur B
+[2026-03-25 08:03:57.430] ButtonChoisirPlacer_Click: joueur=Joueur B
+[2026-03-25 08:04:01.306] BtnGrille_Click: placement par Joueur B en (7,6)
+[2026-03-25 08:04:01.310] DemarrerTour: joueurActuel=Joueur A
+[2026-03-25 08:04:13.538] ButtonChoisirPlacer_Click: joueur=Joueur A
+[2026-03-25 08:04:16.788] BtnGrille_Click: placement par Joueur A en (1,8)
+[2026-03-25 08:04:16.794] DemarrerTour: joueurActuel=Joueur B
+[2026-03-25 08:04:23.445] ButtonChoisirPlacer_Click: joueur=Joueur B
+[2026-03-25 08:04:27.445] BtnGrille_Click: placement par Joueur B en (8,5)
+[2026-03-25 08:04:29.337] DemarrerTour: joueurActuel=Joueur A
+[2026-03-25 08:04:32.159] ButtonChoisirPlacer_Click: joueur=Joueur A
+[2026-03-25 08:04:36.816] BtnGrille_Click: placement par Joueur A en (5,12)
+[2026-03-25 08:04:39.059] DemarrerTour: joueurActuel=Joueur B

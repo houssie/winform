@@ -600,6 +600,31 @@ public partial class Form1 : Form
             }
         }
 
+        // Dessiner les lignes des alignements en premier (derrière les points)
+        if (plateau != null && plateau.AlignementsAffichage.Count > 0)
+        {
+            using (Pen linePen = new Pen(Color.Green, 3))
+            {
+                foreach (var alignment in plateau.AlignementsAffichage)
+                {
+                    if (alignment.Count < 2) continue;
+                    
+                    for (int i = 0; i < alignment.Count - 1; i++)
+                    {
+                        Point p1 = alignment[i];
+                        Point p2 = alignment[i + 1];
+                        
+                        int x1 = (p1.Y * 600) / taillePlateau;
+                        int y1 = (p1.X * 600) / taillePlateau;
+                        int x2 = (p2.Y * 600) / taillePlateau;
+                        int y2 = (p2.X * 600) / taillePlateau;
+                        
+                        e.Graphics.DrawLine(linePen, x1, y1, x2, y2);
+                    }
+                }
+            }
+        }
+
         // Dessiner les points aux intersections
         if (plateau == null) return;
         
@@ -632,16 +657,6 @@ public partial class Form1 : Form
                         using (Pen pen = new Pen(Color.Blue, 2))
                         {
                             e.Graphics.DrawEllipse(pen, xCenter - rayon, yCenter - rayon, rayon * 2, rayon * 2);
-                        }
-                    }
-
-                    // Fond vert si protection
-                    if (cellule.EstProtege)
-                    {
-                        int rectSize = 20;
-                        using (Brush brush = new SolidBrush(Color.FromArgb(100, 144, 238, 144)))
-                        {
-                            e.Graphics.FillRectangle(brush, xCenter - rectSize, yCenter - rectSize, rectSize * 2, rectSize * 2);
                         }
                     }
                 }

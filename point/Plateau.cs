@@ -8,6 +8,7 @@ public class Plateau
 {
     public int Taille { get; private set; }
     public Cellule[,] Grille { get; private set; }
+    public List<List<Point>> AlignementsAffichage { get; set; } = new List<List<Point>>();
 
     public Plateau(int taille)
     {
@@ -163,11 +164,15 @@ public class Plateau
             }
         }
         
+        // Stocker les alignements pour l'affichage
+        AlignementsAffichage = new List<List<Point>>();
+        
         int pts = 0;
         foreach (var a in alignementsValides)
         {
             if (AlignementCroiseAdversaire(a, joueur)) continue;
             foreach (var p in a) Grille[p.X, p.Y].Proteger();
+            AlignementsAffichage.Add(a);
             pts++;
         }
         return pts;
@@ -331,6 +336,9 @@ public class Plateau
             }
         }
         
+        // Stocker les alignements pour l'affichage
+        var nouvelAlignementsAffichage = new List<List<Point>>(AlignementsAffichage);
+        
         int pts = 0;
         foreach (var a in aligns)
         {
@@ -344,8 +352,10 @@ public class Plateau
             if (AlignementCroiseAdversaire(a, joueur)) continue;
             
             foreach (var p in a) Grille[p.X, p.Y].Proteger();
+            nouvelAlignementsAffichage.Add(a);
             pts++;
         }
+        AlignementsAffichage = nouvelAlignementsAffichage;
         return pts;
     }
 }
